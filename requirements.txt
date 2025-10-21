@@ -2,3 +2,9 @@ python-telegram-bot>=21.6,<22
 Flask>=3.0,<4
 gunicorn>=21,<22
 
+# Base de données PostgreSQL
+Flask-SQLAlchemy>=3.1,<4
+psycopg2-binary>=2.9,<3
+
+# Appels HTTP vers l’API Systeme.io
+requests>=2.31,<3
