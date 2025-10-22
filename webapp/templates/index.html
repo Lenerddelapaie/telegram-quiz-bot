@@ -1,630 +1,624 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Quiz — Êtes-vous fait pour être gestionnaire de paie ? | La Paie Facile</title>
-  <meta name="description" content="Découvrez si le métier de gestionnaire de paie est fait pour vous grâce à ce quiz interactif La Paie Facile.">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quiz — Êtes-vous fait pour être gestionnaire de paie ? | La Paie Facile</title>
+  <meta name="description" content="Découvrez si le métier de gestionnaire de paie est fait pour vous grâce à ce quiz interactif La Paie Facile.">
 
-  <!-- Styles additionnels légers pour le bloc email -->
-  <style>
-    body { margin: 0; background: #fff; color: #111; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
-    #email-block { max-width: 860px; margin: 40px auto; padding: 0 16px; text-align: center; }
-    #email { padding: 12px 14px; border: 2px solid #000; border-radius: 10px; width: 70%; max-width: 420px; font-size: 1rem; }
-    .lpf-btn { background:#2AFF00; color:#000; font-weight:900; font-size:1.06rem; padding:12px 18px; border:none; border-radius:12px; cursor:pointer; box-shadow: 0 3px 0 rgba(0,0,0,.7); transition: transform .12s, background .12s; }
-    .lpf-btn:hover { background:#20de00; transform: translateY(-1px); }
-    .feedback { font-weight: 600; margin-top: 10px; }
-  </style>
+    <style>
+    body { margin: 0; background: #fff; color: #111; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    #email-block { max-width: 860px; margin: 40px auto; padding: 0 16px; text-align: center; }
+    #email { padding: 12px 14px; border: 2px solid #000; border-radius: 10px; width: 70%; max-width: 420px; font-size: 1rem; }
+    .lpf-btn { background:#2AFF00; color:#000; font-weight:900; font-size:1.06rem; padding:12px 18px; border:none; border-radius:12px; cursor:pointer; box-shadow: 0 3px 0 rgba(0,0,0,.7); transition: transform .12s, background .12s; }
+    .lpf-btn:hover { background:#20de00; transform: translateY(-1px); }
+    .feedback { font-weight: 600; margin-top: 10px; }
+  </style>
 </head>
 
 <body>
-  <!-- ======================= -->
-  <!-- LPF QUIZ — bloc autonome -->
-  <!-- ======================= -->
-  <div id="lpf-quiz-root"></div>
+        <div id="lpf-quiz-root"></div>
 
-  <style>
-    /* ===== LPF Styles (scopés) ===== */
-    #lpf-quiz-root { font-family: Inter, system-ui, Arial, sans-serif; color:#111; max-width: 860px; margin: 32px auto; padding: 0 16px; }
-    #lpf-quiz-root * { box-sizing: border-box; }
-    #lpf-quiz-root .lpf-card { background:#fff; border:6px solid #000; border-radius:24px; padding:24px 20px; margin:20px 0; box-shadow: 0 6px 0 rgba(0,0,0,.06); }
-    #lpf-quiz-root h2 { font-size:1.6rem; margin:0 0 10px; }
-    #lpf-quiz-root p { line-height:1.55; }
+  <style>
+    /* ===== LPF Styles (scopés) ===== */
+    #lpf-quiz-root { font-family: Inter, system-ui, Arial, sans-serif; color:#111; max-width: 860px; margin: 32px auto; padding: 0 16px; }
+    #lpf-quiz-root * { box-sizing: border-box; }
+    #lpf-quiz-root .lpf-card { background:#fff; border:6px solid #000; border-radius:24px; padding:24px 20px; margin:20px 0; box-shadow: 0 6px 0 rgba(0,0,0,.06); }
+    #lpf-quiz-root h2 { font-size:1.6rem; margin:0 0 10px; }
+    #lpf-quiz-root p { line-height:1.55; }
 
-    /* Progression */
-    #lpf-quiz-root .lpf-progress { display:flex; gap:10px; align-items:center; margin: 12px 0 8px; }
-    #lpf-quiz-root .lpf-progress-bar { flex:1; background:#eee; height:10px; border-radius:6px; border:2px solid #000; position:relative; }
-    #lpf-quiz-root .lpf-progress-bar span { display:block; background:#2AFF00; height:100%; border-radius:4px; transition: width .2s ease; width:0%; }
-    #lpf-quiz-root .lpf-progress-label { min-width: 120px; font-weight: 800; text-align: right; }
+    /* Progression */
+    #lpf-quiz-root .lpf-progress { display:flex; gap:10px; align-items:center; margin: 12px 0 8px; }
+    #lpf-quiz-root .lpf-progress-bar { flex:1; background:#eee; height:10px; border-radius:6px; border:2px solid #000; position:relative; }
+    #lpf-quiz-root .lpf-progress-bar span { display:block; background:#2AFF00; height:100%; border-radius:4px; transition: width .2s ease; width:0%; }
+    #lpf-quiz-root .lpf-progress-label { min-width: 120px; font-weight: 800; text-align: right; }
 
-    /* Section micro-intros */
-    #lpf-quiz-root .lpf-section-intro { border:3px dashed #000; border-radius:16px; padding:12px 14px; margin:12px 0; background:#f9f9f9; font-weight: 600; }
+    /* Section micro-intros */
+    #lpf-quiz-root .lpf-section-intro { border:3px dashed #000; border-radius:16px; padding:12px 14px; margin:12px 0; background:#f9f9f9; font-weight: 600; }
 
-    /* Questions & options */
-    #lpf-quiz-root .lpf-question { font-weight: 800; font-size:1.14rem; margin-bottom: 12px; }
-    #lpf-quiz-root fieldset { border:0; padding:0; margin:0; }
-    #lpf-quiz-root legend.lpf-question { padding:0; }
-    #lpf-quiz-root .lpf-options { display: grid; gap: 10px; }
-    #lpf-quiz-root .lpf-option { display:flex; gap:10px; align-items:flex-start; padding:12px 14px; border:2px solid #000; border-radius:12px; background:#fff; cursor:pointer; transition: transform .08s ease; }
-    #lpf-quiz-root .lpf-option:hover { transform: translateY(-1px); }
-    #lpf-quiz-root .lpf-option input { margin-top: 2px; }
-    /* Sélection visible */
-    #lpf-quiz-root .lpf-option:has(input:checked) { outline: 3px solid #000; outline-offset: 2px; box-shadow: 0 0 0 3px rgba(0,0,0,.05) inset; }
-    .no-has #lpf-quiz-root .lpf-option.is-checked { outline: 3px solid #000; outline-offset: 2px; box-shadow: 0 0 0 3px rgba(0,0,0,.05) inset; }
+    /* Questions & options */
+    #lpf-quiz-root .lpf-question { font-weight: 800; font-size:1.14rem; margin-bottom: 12px; }
+    #lpf-quiz-root fieldset { border:0; padding:0; margin:0; }
+    #lpf-quiz-root legend.lpf-question { padding:0; }
+    #lpf-quiz-root .lpf-options { display: grid; gap: 10px; }
+    #lpf-quiz-root .lpf-option { display:flex; gap:10px; align-items:flex-start; padding:12px 14px; border:2px solid #000; border-radius:12px; background:#fff; cursor:pointer; transition: transform .08s ease; }
+    #lpf-quiz-root .lpf-option:hover { transform: translateY(-1px); }
+    #lpf-quiz-root .lpf-option input { margin-top: 2px; }
+    /* Sélection visible */
+    #lpf-quiz-root .lpf-option:has(input:checked) { outline: 3px solid #000; outline-offset: 2px; box-shadow: 0 0 0 3px rgba(0,0,0,.05) inset; }
+    .no-has #lpf-quiz-root .lpf-option.is-checked { outline: 3px solid #000; outline-offset: 2px; box-shadow: 0 0 0 3px rgba(0,0,0,.05) inset; }
 
-    /* Focus clavier visible */
-    #lpf-quiz-root .lpf-option:focus-visible,
-    #lpf-quiz-root .lpf-btn:focus-visible { outline: 3px solid #000; outline-offset: 3px; border-radius: 10px; }
+    /* Focus clavier visible */
+    #lpf-quiz-root .lpf-option:focus-visible,
+    #lpf-quiz-root .lpf-btn:focus-visible { outline: 3px solid #000; outline-offset: 3px; border-radius: 10px; }
 
-    /* Actions / boutons LPF */
-    #lpf-quiz-root .lpf-actions { display:flex; gap:10px; justify-content: flex-end; margin-top: 18px; }
-    #lpf-quiz-root .lpf-btn {
-      background:#2AFF00; color:#000; font-weight: 900; font-size:1.06rem; padding:12px 18px;
-      border:none; border-radius: 12px; cursor:pointer; box-shadow: 0 3px 0 rgba(0,0,0,.7); transition: transform .12s, background .12s;
-    }
-    #lpf-quiz-root .lpf-btn:hover { background:#20de00; transform: translateY(-1px); }
-    #lpf-quiz-root .lpf-btn.ghost { background:#fff; border:2px solid #000; box-shadow:none; font-weight: 800; }
-    #lpf-quiz-root .lpf-btn[disabled] { opacity:.5; cursor:not-allowed; }
+    /* Actions / boutons LPF */
+    #lpf-quiz-root .lpf-actions { display:flex; gap:10px; justify-content: flex-end; margin-top: 18px; }
+    #lpf-quiz-root .lpf-btn {
+      background:#2AFF00; color:#000; font-weight: 900; font-size:1.06rem; padding:12px 18px;
+      border:none; border-radius: 12px; cursor:pointer; box-shadow: 0 3px 0 rgba(0,0,0,.7); transition: transform .12s, background .12s;
+    }
+    #lpf-quiz-root .lpf-btn:hover { background:#20de00; transform: translateY(-1px); }
+    #lpf-quiz-root .lpf-btn.ghost { background:#fff; border:2px solid #000; box-shadow:none; font-weight: 800; }
+    #lpf-quiz-root .lpf-btn[disabled] { opacity:.5; cursor:not-allowed; }
 
-    /* Break & Result */
-    #lpf-quiz-root .lpf-break h3 { margin: 0 0 6px; }
-    #lpf-quiz-root .lpf-break p { margin: 6px 0; }
-    #lpf-quiz-root .lpf-result h2 { margin-top:0; }
-    #lpf-quiz-root .lpf-result .body { margin-top: 8px; }
+    /* Break & Result */
+    #lpf-quiz-root .lpf-break h3 { margin: 0 0 6px; }
+    #lpf-quiz-root .lpf-break p { margin: 6px 0; }
+    #lpf-quiz-root .lpf-result h2 { margin-top:0; }
+    #lpf-quiz-root .lpf-result .body { margin-top: 8px; }
 
-    /* Reduced motion */
-    @media (prefers-reduced-motion: reduce){
-      #lpf-quiz-root * { transition: none !important; animation: none !important; }
-    }
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      #lpf-quiz-root * { transition: none !important; animation: none !important; }
+    }
 
-    @media (max-width:560px){
-      #lpf-quiz-root .lpf-actions { flex-direction: column; }
-      #lpf-quiz-root .lpf-btn, #lpf-quiz-root .lpf-btn.ghost { width: 100%; }
-    }
-  </style>
+    @media (max-width:560px){
+      #lpf-quiz-root .lpf-actions { flex-direction: column; }
+      #lpf-quiz-root .lpf-btn, #lpf-quiz-root .lpf-btn.ghost { width: 100%; }
+    }
+  </style>
 
-  <script>
-  (function(){
-    /* ====== PARAMS ====== */
-    const GUIDE_URL = "https://tonsite.com/guide-complet-gestionnaire-de-paie.pdf"; // ← remplace par ton lien PDF
-    const PROG = [20,30,40,50,55,60,70,75,80,85,95,100]; // progression affichée
+  <script>
+  (function(){
+    /* ====== PARAMS ====== */
+    // MODIFICATION 1 : GUIDE_URL est vide pour forcer la validation par e-mail via Systeme.io
+    const GUIDE_URL = ""; 
+    const PROG = [20,30,40,50,55,60,70,75,80,85,95,100]; // progression affichée
 
-    /* Détection support :has() (fallback classe .no-has) */
-    try{ document.querySelector(':has(*)'); } catch(e){ document.documentElement.classList.add('no-has'); }
+    /* Détection support :has() (fallback classe .no-has) */
+    try{ document.querySelector(':has(*)'); } catch(e){ document.documentElement.classList.add('no-has'); }
 
-    /* Contenus d'intro */
-    const TEXT = {
-      start: {
-        title: "Quiz « Êtes-vous fait pour être gestionnaire de paie ? »",
-        body: [
-          "Découvrez ce qui vous motive vraiment au travail et si le métier de gestionnaire de paie vous correspond.",
-          "« Tout le monde sait ce qu’il fait… mais très peu savent pourquoi ils le font. » — Simon Sinek",
-          "Avant de choisir votre prochaine étape professionnelle, prenez un moment pour comprendre ce qui vous anime vraiment.",
-          "Ce quiz interactif vous invite à un voyage simple et puissant pour avancer avec clarté et confiance.",
-          "Ce n’est pas un test ordinaire : c’est un outil pour vous reconnecter à ce qui vous anime profondément."
-        ],
-        cta: "🚀 C’est parti"
-      },
-      instructions: {
-        title: "Avant de commencer",
-        ps: [
-          "Ce quiz comprend <strong>une dizaine de questions simples</strong>, à compléter en <strong>3 à 5 minutes</strong>.",
-          "À chaque étape, choisissez la réponse <strong>qui vous correspond le mieux</strong>.",
-          "Il n’y a <strong>ni bonnes ni mauvaises réponses</strong> : chacune révèle une part de votre force.",
-          "Une <strong>barre de progression</strong> vous montre votre avancement : chaque étape franchie vous rapproche du résultat.",
-          "⚠️ Pour un portrait fiable, <strong>répondez à toutes les questions</strong>.",
-          "À la fin, vous recevrez votre <strong>profil expliqué</strong>, le <strong>danger à éviter</strong> et le <strong>guide complet</strong> pour réussir concrètement.",
-          "<em>C’est rapide, simple et 100 % confidentiel.</em>"
-        ],
-        cta: "🎯 Commencer le quiz"
-      },
-      micro: {
-        a: "Répondez spontanément : la première idée est souvent la bonne.",
-        b: "Continuez sur votre lancée : vous avancez très bien.",
-        c: "Dernière ligne droite : votre portrait se précise."
-      },
-      breaks: {
-        after4: {
-          h: "Première étape réussie",
-          t: "Vous avez posé des bases solides. Continuez : vous tenez un bon rythme.",
-          s: "Vous avez déjà parcouru 50 % du chemin."
-        },
-        after8: {
-          h: "Deuxième étape complétée",
-          t: "Plus que quelques questions pour affiner votre portrait.",
-          s: "Vous êtes déjà à 75 % du parcours."
-        },
-        final: {
-          h: "Bravo, vous êtes allé(e) jusqu’au bout",
-          t: "Votre profil est prêt : forces + danger à éviter, avec les prochaines étapes.",
-          cta: "Voir mon résultat"
-        }
-      }
-    };
+    /* Contenus d'intro */
+    const TEXT = {
+      start: {
+        title: "Quiz « Êtes-vous fait pour être gestionnaire de paie ? »",
+        body: [
+          "Découvrez ce qui vous motive vraiment au travail et si le métier de gestionnaire de paie vous correspond.",
+          "« Tout le monde sait ce qu’il fait… mais très peu savent pourquoi ils le font. » — Simon Sinek",
+          "Avant de choisir votre prochaine étape professionnelle, prenez un moment pour comprendre ce qui vous anime vraiment.",
+          "Ce quiz interactif vous invite à un voyage simple et puissant pour avancer avec clarté et confiance.",
+          "Ce n’est pas un test ordinaire : c’est un outil pour vous reconnecter à ce qui vous anime profondément."
+        ],
+        cta: "🚀 C’est parti"
+      },
+      instructions: {
+        title: "Avant de commencer",
+        ps: [
+          "Ce quiz comprend <strong>une dizaine de questions simples</strong>, à compléter en <strong>3 à 5 minutes</strong>.",
+          "À chaque étape, choisissez la réponse <strong>qui vous correspond le mieux</strong>.",
+          "Il n’y a <strong>ni bonnes ni mauvaises réponses</strong> : chacune révèle une part de votre force.",
+          "Une <strong>barre de progression</strong> vous montre votre avancement : chaque étape franchie vous rapproche du résultat.",
+          "⚠️ Pour un portrait fiable, <strong>répondez à toutes les questions</strong>.",
+          "À la fin, vous recevrez votre <strong>profil expliqué</strong>, le <strong>danger à éviter</strong> et le <strong>guide complet</strong> pour réussir concrètement.",
+          "<em>C’est rapide, simple et 100 % confidentiel.</em>"
+        ],
+        cta: "🎯 Commencer le quiz"
+      },
+      micro: {
+        a: "Répondez spontanément : la première idée est souvent la bonne.",
+        b: "Continuez sur votre lancée : vous avancez très bien.",
+        c: "Dernière ligne droite : votre portrait se précise."
+      },
+      breaks: {
+        after4: {
+          h: "Première étape réussie",
+          t: "Vous avez posé des bases solides. Continuez : vous tenez un bon rythme.",
+          s: "Vous avez déjà parcouru 50 % du chemin."
+        },
+        after8: {
+          h: "Deuxième étape complétée",
+          t: "Plus que quelques questions pour affiner votre portrait.",
+          s: "Vous êtes déjà à 75 % du parcours."
+        },
+        final: {
+          h: "Bravo, vous êtes allé(e) jusqu’au bout",
+          t: "Votre profil est prêt : forces + danger à éviter, avec les prochaines étapes.",
+          cta: "Voir mon résultat"
+        }
+      }
+    };
 
-    /* Questions */
-    const QUESTIONS = [
-      // Bloc A (1..4)
-      { id:"q1", block:"a", text:"Qu’est-ce qui vous motive le plus dans votre travail ?", options:[
-        {label:"Contribuer à la justice et à l’équité", profile:"gardien"},
-        {label:"Organiser et mettre de l’ordre", profile:"organisateur"},
-        {label:"Relever des défis et résoudre des problèmes", profile:"resolveur"},
-        {label:"Communiquer et aider les autres", profile:"communicant"}
-      ]},
-      { id:"q2", block:"a", text:"Quelle valeur compte le plus pour vous au quotidien ?", options:[
-        {label:"L’équité – garantir un traitement juste", profile:"gardien"},
-        {label:"L’organisation – un cadre structuré", profile:"organisateur"},
-        {label:"La fiabilité – on peut compter sur vous", profile:"collaborateur"},
-        {label:"L’apprentissage – évoluer en continu", profile:"curieux"}
-      ]},
-      { id:"q3", block:"a", text:"Qu’est-ce qui vous attire dans la gestion de la paie ?", options:[
-        {label:"Assurer une paie correcte et conforme pour tous", profile:"gardien"},
-        {label:"Être au cœur du fonctionnement et de la stabilité", profile:"organisateur"},
-        {label:"Maîtriser un domaine technique exigeant", profile:"expert"},
-        {label:"Allier chiffres et accompagnement des personnes", profile:"communicant"}
-      ]},
-      { id:"q4", block:"a", text:"Qu’est-ce qui vous donne le plus le sentiment d’être utile ?", options:[
-        {label:"Aider concrètement quelqu’un", profile:"collaborateur"},
-        {label:"Résoudre un problème épineux", profile:"resolveur"},
-        {label:"Respecter les échéances et les règles", profile:"organisateur"},
-        {label:"Apprendre quelque chose de nouveau", profile:"curieux"}
-      ]},
+    /* Questions */
+    const QUESTIONS = [
+      // Bloc A (1..4)
+      { id:"q1", block:"a", text:"Qu’est-ce qui vous motive le plus dans votre travail ?", options:[
+        {label:"Contribuer à la justice et à l’équité", profile:"gardien"},
+        {label:"Organiser et mettre de l’ordre", profile:"organisateur"},
+        {label:"Relever des défis et résoudre des problèmes", profile:"resolveur"},
+        {label:"Communiquer et aider les autres", profile:"communicant"}
+      ]},
+      { id:"q2", block:"a", text:"Quelle valeur compte le plus pour vous au quotidien ?", options:[
+        {label:"L’équité – garantir un traitement juste", profile:"gardien"},
+        {label:"L’organisation – un cadre structuré", profile:"organisateur"},
+        {label:"La fiabilité – on peut compter sur vous", profile:"collaborateur"},
+        {label:"L’apprentissage – évoluer en continu", profile:"curieux"}
+      ]},
+      { id:"q3", block:"a", text:"Qu’est-ce qui vous attire dans la gestion de la paie ?", options:[
+        {label:"Assurer une paie correcte et conforme pour tous", profile:"gardien"},
+        {label:"Être au cœur du fonctionnement et de la stabilité", profile:"organisateur"},
+        {label:"Maîtriser un domaine technique exigeant", profile:"expert"},
+        {label:"Allier chiffres et accompagnement des personnes", profile:"communicant"}
+      ]},
+      { id:"q4", block:"a", text:"Qu’est-ce qui vous donne le plus le sentiment d’être utile ?", options:[
+        {label:"Aider concrètement quelqu’un", profile:"collaborateur"},
+        {label:"Résoudre un problème épineux", profile:"resolveur"},
+        {label:"Respecter les échéances et les règles", profile:"organisateur"},
+        {label:"Apprendre quelque chose de nouveau", profile:"curieux"}
+      ]},
 
-      // Bloc B (5..8)
-      { id:"q5", block:"b", text:"Laquelle de ces phrases vous ressemble le plus au travail ?", options:[
-        {label:"Je planifie méthodiquement mes tâches", profile:"organisateur"},
-        {label:"Je vérifie chaque détail pour éviter les erreurs", profile:"expert"},
-        {label:"Je prends des initiatives et j’avance en autonomie", profile:"strategique"},
-        {label:"Je collabore et je facilite la communication", profile:"communicant"}
-      ]},
-      { id:"q6", block:"b", text:"Face à une nouvelle tâche complexe, vous avez tendance à…", options:[
-        {label:"Vous documenter et vous former", profile:"curieux"},
-        {label:"Découper en étapes structurées", profile:"organisateur"},
-        {label:"Voir ça comme un défi stimulant", profile:"resolveur"},
-        {label:"Demander conseil aux plus expérimentés", profile:"communicant"}
-      ]},
-      { id:"q7", block:"b", text:"En cas d’imprévu ou d’urgence, vous…", options:[
-        {label:"Gardez votre calme et analysez", profile:"resolveur"},
-        {label:"Priorisez et vous organisez aussitôt", profile:"organisateur"},
-        {label:"Informez et coordonnez l’entraide", profile:"communicant"},
-        {label:"Appliquez les règles et la technique", profile:"expert"}
-      ]},
-      { id:"q8", block:"b", text:"Le compliment qui vous fait le plus plaisir :", options:[
-        {label:"« On peut toujours compter sur vous »", profile:"collaborateur"},
-        {label:"« C’est toujours bien organisé et sans erreur »", profile:"organisateur"},
-        {label:"« Vous trouvez toujours la solution »", profile:"resolveur"},
-        {label:"« Votre pédagogie nous aide énormément »", profile:"communicant"}
-      ]},
+      // Bloc B (5..8)
+      { id:"q5", block:"b", text:"Laquelle de ces phrases vous ressemble le plus au travail ?", options:[
+        {label:"Je planifie méthodiquement mes tâches", profile:"organisateur"},
+        {label:"Je vérifie chaque détail pour éviter les erreurs", profile:"expert"},
+        {label:"Je prends des initiatives et j’avance en autonomie", profile:"strategique"},
+        {label:"Je collabore et je facilite la communication", profile:"communicant"}
+      ]},
+      { id:"q6", block:"b", text:"Face à une nouvelle tâche complexe, vous avez tendance à…", options:[
+        {label:"Vous documenter et vous former", profile:"curieux"},
+        {label:"Découper en étapes structurées", profile:"organisateur"},
+        {label:"Voir ça comme un défi stimulant", profile:"resolveur"},
+        {label:"Demander conseil aux plus expérimentés", profile:"communicant"}
+      ]},
+      { id:"q7", block:"b", text:"En cas d’imprévu ou d’urgence, vous…", options:[
+        {label:"Gardez votre calme et analysez", profile:"resolveur"},
+        {label:"Priorisez et vous organisez aussitôt", profile:"organisateur"},
+        {label:"Informez et coordonnez l’entraide", profile:"communicant"},
+        {label:"Appliquez les règles et la technique", profile:"expert"}
+      ]},
+      { id:"q8", block:"b", text:"Le compliment qui vous fait le plus plaisir :", options:[
+        {label:"« On peut toujours compter sur vous »", profile:"collaborateur"},
+        {label:"« C’est toujours bien organisé et sans erreur »", profile:"organisateur"},
+        {label:"« Vous trouvez toujours la solution »", profile:"resolveur"},
+        {label:"« Votre pédagogie nous aide énormément »", profile:"communicant"}
+      ]},
 
-      // Bloc C (9..12)
-      { id:"q9", block:"c", text:"Quelle activité vous attire le plus ?", options:[
-        {label:"Analyser des chiffres et vérifier des calculs", profile:"expert"},
-        {label:"Mettre en place un tableau d’organisation", profile:"organisateur"},
-        {label:"Expliquer un bulletin de paie à un collègue", profile:"communicant"},
-        {label:"Veiller au respect des règles et procédures", profile:"gardien"}
-      ]},
-      { id:"q10", block:"c", text:"Parmi ces tâches, laquelle préférez-vous ?", options:[
-        {label:"Le droit / la gestion", profile:"gardien"},
-        {label:"La comptabilité / les mathématiques", profile:"expert"},
-        {label:"Les études de cas complexes", profile:"resolveur"},
-        {label:"Les travaux en groupe avec entraide", profile:"communicant"}
-      ]},
-      { id:"q11", block:"c", text:"Dans un poste administratif, vous aimez surtout…", options:[
-        {label:"La précision des procédures", profile:"gardien"},
-        {label:"Améliorer les méthodes et les outils", profile:"strategique"},
-        {label:"Être la personne référente sur le technique", profile:"expert"},
-        {label:"Accompagner et informer les autres", profile:"communicant"}
-      ]},
-      { id:"q12", block:"c", text:"Ce qui vous enthousiasmerait le plus en paie :", options:[
-        {label:"Garantir une paie juste et conforme", profile:"gardien"},
-        {label:"Organiser le calendrier et les échéances", profile:"organisateur"},
-        {label:"Maîtriser les détails techniques et les logiciels", profile:"expert"},
-        {label:"Conseiller les collaborateurs", profile:"communicant"}
-      ]}
-    ];
+      // Bloc C (9..12)
+      { id:"q9", block:"c", text:"Quelle activité vous attire le plus ?", options:[
+        {label:"Analyser des chiffres et vérifier des calculs", profile:"expert"},
+        {label:"Mettre en place un tableau d’organisation", profile:"organisateur"},
+        {label:"Expliquer un bulletin de paie à un collègue", profile:"communicant"},
+        {label:"Veiller au respect des règles et procédures", profile:"gardien"}
+      ]},
+      { id:"q10", block:"c", text:"Parmi ces tâches, laquelle préférez-vous ?", options:[
+        {label:"Le droit / la gestion", profile:"gardien"},
+        {label:"La comptabilité / les mathématiques", profile:"expert"},
+        {label:"Les études de cas complexes", profile:"resolveur"},
+        {label:"Les travaux en groupe avec entraide", profile:"communicant"}
+      ]},
+      { id:"q11", block:"c", text:"Dans un poste administratif, vous aimez surtout…", options:[
+        {label:"La précision des procédures", profile:"gardien"},
+        {label:"Améliorer les méthodes et les outils", profile:"strategique"},
+        {label:"Être la personne référente sur le technique", profile:"expert"},
+        {label:"Accompagner et informer les autres", profile:"communicant"}
+      ]},
+      { id:"q12", block:"c", text:"Ce qui vous enthousiasmerait le plus en paie :", options:[
+        {label:"Garantir une paie juste et conforme", profile:"gardien"},
+        {label:"Organiser le calendrier et les échéances", profile:"organisateur"},
+        {label:"Maîtriser les détails techniques et les logiciels", profile:"expert"},
+        {label:"Conseiller les collaborateurs", profile:"communicant"}
+      ]}
+    ];
 
-    /* Pondérations internes */
-    const WEIGHTS = { a:0.5, b:0.3, c:0.2 };
-    const TIE = ["gardien","organisateur","expert","resolveur","communicant","collaborateur","strategique","curieux"];
+    /* Pondérations internes */
+    const WEIGHTS = { a:0.5, b:0.3, c:0.2 };
+    const TIE = ["gardien","organisateur","expert","resolveur","communicant","collaborateur","strategique","curieux"];
 
-    /* ====== TES 8 TEXTES DE RÉSULTAT (injection HTML) ====== */
-    const RESULTS = {
-      gardien: {
-        title: "Vous êtes : Gardien de l’Équité",
-        body: `Le gestionnaire de paie est le garant de l’équité au sein de l’entreprise. Son rôle ne se limite pas à établir des bulletins de paie : il veille à ce que chaque salarié reçoive exactement ce qui lui est dû, conformément à la législation sociale en constante évolution. Cela implique la préparation rigoureuse des salaires, la gestion précise des déclarations sociales obligatoires, la prise en compte des absences, primes, heures supplémentaires, ainsi que le respect scrupuleux des échéances.
+    /* ====== TES 8 TEXTES DE RÉSULTAT (injection HTML) - MODIFIÉ POUR EMAIL-WALL ====== */
+    const RESULTS = {
+      gardien: {
+        title: "Vous êtes : Gardien de l’Équité",
+        body: `Le gestionnaire de paie est le garant de l’équité au sein de l’entreprise. Son rôle ne se limite pas à établir des bulletins de paie : il veille à ce que chaque salarié reçoive exactement ce qui lui est dû, conformément à la législation sociale en constante évolution. Cela implique la préparation rigoureuse des salaires, la gestion précise des déclarations sociales obligatoires, la prise en compte des absences, primes, heures supplémentaires, ainsi que le respect scrupuleux des échéances.
 <br><br>C’est un métier à haute responsabilité, au croisement du juridique, du technique et de l’organisation, où chaque erreur peut avoir des conséquences financières et humaines majeures.
 <br><br>En tant que Gardien de l’Équité, vous incarnez la rigueur et le sens du juste. Votre intégrité vous positionne comme un pilier fiable dans un environnement où la précision est essentielle pour éviter les inégalités ou litiges. Votre capacité à expliquer clairement les règles complexes aux salariés ajoute une dimension humaine précieuse, rassurante et pédagogique.
 <br><br><strong>⚠️ Cependant</strong>, votre quête absolue de justice peut parfois générer du stress, surtout face à l’incertitude juridique ou aux subtilités changeantes des règles de paie. Un paramétrage oublié ou une interprétation erronée peuvent paradoxalement créer l’injustice que vous souhaitez combattre.
 <br><br>La clé pour vous est d’asseoir votre expertise sur une connaissance solide des fondamentaux associée à une vision globale apaisée et structurée de la paie.
-<br><br><strong>👉 Pour transformer cette rigueur en un véritable atout durable, téléchargez votre guide pratique, conçu pour vous accompagner vers un métier de gestionnaire de paie exercé avec confiance, maîtrise et sérénité.</strong>`
-      },
-      organisateur: {
-        title: "Vous êtes : Organisateur Méthodique",
-        body: `Le gestionnaire de paie a la lourde responsabilité de piloter l’ensemble des opérations liées au salaire des collaborateurs : élaboration précise des bulletins de paie, suivi rigoureux des déclarations sociales, respect impératif des échéances mensuelles, et gestion sécurisée des données sensibles. Au cœur de ce métier complexe, se conjuguent des compétences techniques pointues, une connaissance fine du cadre juridique, et une organisation sans faille. Chaque élément doit être orchestré avec rigueur, efficacité et adaptabilité pour éviter erreurs et retards coûteux.
+<br><br><strong>👉 Pour transformer cette rigueur en un véritable atout durable et recevoir votre guide complet, renseignez votre adresse e-mail dans le bloc ci-dessous.</strong>`
+      },
+      organisateur: {
+        title: "Vous êtes : Organisateur Méthodique",
+        body: `Le gestionnaire de paie a la lourde responsabilité de piloter l’ensemble des opérations liées au salaire des collaborateurs : élaboration précise des bulletins de paie, suivi rigoureux des déclarations sociales, respect impératif des échéances mensuelles, et gestion sécurisée des données sensibles. Au cœur de ce métier complexe, se conjuguent des compétences techniques pointues, une connaissance fine du cadre juridique, et une organisation sans faille. Chaque élément doit être orchestré avec rigueur, efficacité et adaptabilité pour éviter erreurs et retards coûteux.
 <br><br>En tant qu’Organisateur Méthodique, votre force est votre capacité à structurer, anticiper et maintenir un ordre irréprochable. Vous excellez dans la planification des tâches et le suivi des cycles paie, des points essentiels dans un métier rythmé par des échéances précises et contraignantes. Votre profil révèle également une affinité pour la précision technique, proche du rôle d’expert technique, ce qui vous permet d’être aussi efficace sur la forme que sur le fond.
 <br><br><strong>⚠️ Cependant</strong>, la gestion des imprévus — absences soudaines, variables de dernière minute, évolutions réglementaires fréquentes — peut mettre à l’épreuve votre organisation. Le succès repose alors sur votre capacité à ajuster vos priorités, à rester flexible tout en gardant le cap sur l’essentiel.
-<br><br><strong>👉 Pour transformer cette organisation naturelle en un puissant levier de réussite, téléchargez votre guide pratique. Découvrez comment conjuguer méthode et souplesse pour exceller durablement dans votre parcours de gestionnaire de paie.</strong>`
-      },
-      resolveur: {
-        title: "Vous êtes : Résolveur de Problèmes",
-        body: `Le gestionnaire de paie jongle chaque mois avec un grand nombre d’informations complexes : calculs précis, variables spécifiques à chaque salarié, évolutions légales fréquentes, déclarations sociales et corrections d’anomalies. Son métier est un subtil équilibre entre technique, réglementation et organisation, où chaque situation exceptionnelle demande une vigilance et une réactivité accrues.
+<br><br><strong>👉 Pour transformer cette organisation naturelle en un puissant levier de réussite et recevoir votre guide complet, renseignez votre adresse e-mail dans le bloc ci-dessous.</strong>`
+      },
+      resolveur: {
+        title: "Vous êtes : Résolveur de Problèmes",
+        body: `Le gestionnaire de paie jongle chaque mois avec un grand nombre d’informations complexes : calculs précis, variables spécifiques à chaque salarié, évolutions légales fréquentes, déclarations sociales et corrections d’anomalies. Son métier est un subtil équilibre entre technique, réglementation et organisation, où chaque situation exceptionnelle demande une vigilance et une réactivité accrues.
 <br><br>Vous êtes avant tout un Résolveur de Problèmes : vous aimez analyser en profondeur, comprendre les mécanismes et surtout trouver des solutions efficaces. Cette capacité à débloquer les cas particuliers et à corriger les anomalies est précieuse dans un environnement où chaque détail compte et où l’adaptabilité est essentielle. Votre profil révèle également une dimension d’organisateur méthodique, ce qui vous permet de ne pas perdre de vue les échéances cruciales.
 <br><br><strong>⚠️ Toutefois</strong>, en vous concentrant trop longuement sur un problème isolé, vous risquez de perdre le fil global, ce qui pourrait compromettre le respect des délais et fragiliser l’ensemble du cycle paie.
-<br><br><strong>👉 Pour canaliser votre esprit analytique tout en assurant la ponctualité indispensable, téléchargez votre guide pratique. Apprenez à conjuguer rigueur, méthode et agilité pour faire de vos qualités de résolveur un véritable atout dans votre carrière de gestionnaire de paie.</strong>`
-      },
-      communicant: {
-        title: "Vous êtes : Communicant Responsable",
-        body: `Le gestionnaire de paie ne se limite pas à des chiffres dans des tableaux. C’est souvent un interlocuteur privilégié pour les salariés qui souhaitent comprendre leur fiche de paie, poser des questions ou être rassurés. Ce métier demande donc autant de compétences humaines que techniques : vous êtes le lien essentiel entre la complexité réglementaire et les attentes des collaborateurs.
+<br><br><strong>👉 Pour canaliser votre esprit analytique tout en assurant la ponctualité indispensable et recevoir votre guide complet, renseignez votre adresse e-mail dans le bloc ci-dessous.</strong>`
+      },
+      communicant: {
+        title: "Vous êtes : Communicant Responsable",
+        body: `Le gestionnaire de paie ne se limite pas à des chiffres dans des tableaux. C’est souvent un interlocuteur privilégié pour les salariés qui souhaitent comprendre leur fiche de paie, poser des questions ou être rassurés. Ce métier demande donc autant de compétences humaines que techniques : vous êtes le lien essentiel entre la complexité réglementaire et les attentes des collaborateurs.
 <br><br>Vous êtes avant tout un Communicant Responsable : vous savez expliquer avec clarté, écouter activement et transmettre les informations de façon rassurante. Votre rôle de médiateur crée un climat de confiance indispensable dans une période sensible où la paie impacte directement le quotidien des salariés. Votre profil dévoile également une bonne organisation, qui vous permet de gérer efficacement votre charge de travail tout en restant disponible.
 <br><br><strong>⚠️ Attention</strong> cependant, votre sens du service et votre disponibilité peuvent être source de dispersion. En voulant répondre à toutes les sollicitations, vous risquez de négliger la rigueur technique indispensable à la sécurité des paies.
-<br><br><strong>👉 Pour trouver l’équilibre parfait entre communication et précision, téléchargez votre guide pratique. Il vous accompagnera pour exceller dans votre rôle de gestionnaire de paie, à la fois pédagogue et expert fiable.</strong>`
-      },
-      expert: {
-        title: "Vous êtes : Expert Technique",
-        body: `Le métier de gestionnaire de paie repose sur une maîtrise technique pointue. Il s'agit de gérer des règles juridiques complexes, d'effectuer des calculs précis des cotisations sociales, de paramétrer avec rigueur des logiciels spécialisés, et de garantir la conformité avec les lois et conventions collectives. Dans ce domaine, chaque détail a son importance et peut avoir des conséquences majeures, tant pour l’entreprise que pour les salariés.
+<br><br><strong>👉 Pour trouver l’équilibre parfait entre communication et précision et recevoir votre guide complet, renseignez votre adresse e-mail dans le bloc ci-dessous.</strong>`
+      },
+      expert: {
+        title: "Vous êtes : Expert Technique",
+        body: `Le métier de gestionnaire de paie repose sur une maîtrise technique pointue. Il s'agit de gérer des règles juridiques complexes, d'effectuer des calculs précis des cotisations sociales, de paramétrer avec rigueur des logiciels spécialisés, et de garantir la conformité avec les lois et conventions collectives. Dans ce domaine, chaque détail a son importance et peut avoir des conséquences majeures, tant pour l’entreprise que pour les salariés.
 <br><br>Vous êtes avant tout un Expert Technique : vous aimez comprendre en profondeur les règles, vérifier minutieusement les chiffres, et produire des documents impeccables. Votre rigueur et votre souci du détail font de vous un pilier indispensable dans la chaîne de la paie. Votre profil révèle aussi une capacité d’analyse forte, un atout précieux pour détecter et résoudre rapidement les anomalies.
 <br><br><strong>⚠️ Cependant</strong>, votre immersion dans la complexité technique peut parfois vous faire perdre la vision d’ensemble et vous isoler dans les détails, au risque de passer à côté des enjeux plus globaux.
-<br><br><strong>👉 Pour renforcer et structurer vos compétences techniques tout en gardant une perspective stratégique, téléchargez votre guide pratique. Apprenez à transformer votre expertise en un levier reconnu et durable pour réussir pleinement votre carrière de gestionnaire de paie.</strong>`
-      },
-      strategique: {
-        title: "Vous êtes : Stratégique Visionnaire",
-        body: `Le gestionnaire de paie ne se limite plus à un simple rôle technique. Il est aujourd’hui un acteur clé de la performance globale de l’entreprise. Au-delà de la préparation des bulletins de salaire, il optimise les processus, pilote les outils numériques, anticipe les évolutions réglementaires, et contribue aux stratégies de Ressources Humaines. Son expertise nourrit les décisions stratégiques pour garantir la conformité, la satisfaction des collaborateurs et la stabilité financière de l’entreprise.
+<br><br><strong>👉 Pour renforcer et structurer vos compétences techniques tout en gardant une perspective stratégique et recevoir votre guide complet, renseignez votre adresse e-mail dans le bloc ci-dessous.</strong>`
+      },
+      strategique: {
+        title: "Vous êtes : Stratégique Visionnaire",
+        body: `Le gestionnaire de paie ne se limite plus à un simple rôle technique. Il est aujourd’hui un acteur clé de la performance globale de l’entreprise. Au-delà de la préparation des bulletins de salaire, il optimise les processus, pilote les outils numériques, anticipe les évolutions réglementaires, et contribue aux stratégies de Ressources Humaines. Son expertise nourrit les décisions stratégiques pour garantir la conformité, la satisfaction des collaborateurs et la stabilité financière de l’entreprise.
 <br><br>Vous êtes avant tout un Stratégique Visionnaire : vous aimez prendre du recul, observer les systèmes dans leur globalité, et identifier les leviers d’amélioration. Vous refusez la routine, voyant la paie comme un processus à faire évoluer en continu. Votre capacité à innover s’appuie sur une base solide d’organisation, indispensable pour concrétiser vos ambitions et transformer la stratégie en résultats opérationnels.
 <br><br><strong>⚠️ Pourtant</strong>, si vous négligez les fondamentaux du quotidien — la maîtrise des calculs, le respect des échéances et la conformité — votre vision ambitieuse risque de rester théorique et sans impact concret.
-<br><br><strong>👉 Pour poser les fondations solides de votre avenir stratégique, téléchargez votre guide pratique. Il vous aidera à équilibrer vision d’ensemble et rigueur opérationnelle, pour faire de votre parcours gestionnaire de paie une réussite durable.</strong>`
-      },
-      collaborateur: {
-        title: "Vous êtes : Collaborateur Discret et Fiable",
-        body: `Le métier de gestionnaire de paie repose sur une exigence absolue de confidentialité et de fiabilité. Vous traitez au quotidien des données sensibles : salaires, absences, contrats, informations personnelles précises qui demandent un respect rigoureux des règles de confidentialité. Chaque salarié doit pouvoir vous faire pleinement confiance, car une erreur ou une fuite d’information pourrait entraîner des conséquences lourdes tant humaines que juridiques.
+<<br><strong>👉 Pour poser les fondations solides de votre avenir stratégique et recevoir votre guide complet, renseignez votre adresse e-mail dans le bloc ci-dessous.</strong>`
+      },
+      collaborateur: {
+        title: "Vous êtes : Collaborateur Discret et Fiable",
+        body: `Le métier de gestionnaire de paie repose sur une exigence absolue de confidentialité et de fiabilité. Vous traitez au quotidien des données sensibles : salaires, absences, contrats, informations personnelles précises qui demandent un respect rigoureux des règles de confidentialité. Chaque salarié doit pouvoir vous faire pleinement confiance, car une erreur ou une fuite d’information pourrait entraîner des conséquences lourdes tant humaines que juridiques.
 <br><br>Vous êtes avant tout un Collaborateur Discret et Fiable : sérieux, loyal et constant, vous êtes la personne sur laquelle l’entreprise s’appuie pour assurer des paies justes, conformes et sécurisées. Votre sens aigu de l’équité vient renforcer ce statut, faisant de vous un acteur clé dans la justice salariale au quotidien.
 <br><br><strong>⚠️ Cependant</strong>, votre discrétion et votre modestie peuvent freiner la reconnaissance de vos compétences et limiter vos perspectives d’évolution professionnelle.
-<br><br><strong>👉 Pour valoriser vos atouts, renforcer votre confiance et avancer sereinement dans votre carrière, téléchargez votre guide pratique. Apprenez à faire rayonner votre fiabilité tout en développant votre visibilité dans le métier de gestionnaire de paie.</strong>`
-      },
-      curieux: {
-        title: "Vous êtes : Curieux Apprenant",
-        body: `Le domaine de la paie est en constante évolution : les lois changent régulièrement, les conventions collectives sont mises à jour, et les logiciels se modernisent sans cesse. Pour réussir dans ce métier dynamique, il faut absolument être capable d’apprendre en continu et d’adapter ses connaissances au fil des nouveautés.
+<br><br><strong>👉 Pour valoriser vos atouts, renforcer votre confiance et avancer sereinement dans votre carrière et recevoir votre guide complet, renseignez votre adresse e-mail dans le bloc ci-dessous.</strong>`
+      },
+      curieux: {
+        title: "Vous êtes : Curieux Apprenant",
+        body: `Le domaine de la paie est en constante évolution : les lois changent régulièrement, les conventions collectives sont mises à jour, et les logiciels se modernisent sans cesse. Pour réussir dans ce métier dynamique, il faut absolument être capable d’apprendre en continu et d’adapter ses connaissances au fil des nouveautés.
 <br><br>Vous êtes avant tout un Curieux Apprenant : vous aimez découvrir, progresser et explorer de nouveaux savoirs. Cette curiosité est un moteur puissant dans un environnement qui bouge sans cesse. Votre profil révèle aussi une capacité naturelle à communiquer et partager vos apprentissages, une qualité précieuse pour évoluer en équipe.
 <br><br><strong>⚠️ Attention</strong> cependant : sans un plan clair et structuré, vous risquez de vous disperser et de manquer de bases solides, ce qui pourrait ralentir votre progression.
-<br><br><strong>👉 Pour structurer vos apprentissages et progresser efficacement, téléchargez votre guide pratique. Découvrez comment transformer votre soif d’apprendre en succès concret dans le métier de gestionnaire de paie, même face aux évolutions constantes.</strong>`
-      }
-    };
+<br><br><strong>👉 Pour structurer vos apprentissages et progresser efficacement et recevoir votre guide complet, renseignez votre adresse e-mail dans le bloc ci-dessous.</strong>`
+      }
+    };
 
-    /* ===== Utils ===== */
-    function seedRng(seed){
-      let x = 0; for (let i=0;i<seed.length;i++) x = (x<<5) - x + seed.charCodeAt(i) | 0;
-      return ()=>{ x ^= x<<13; x ^= x>>>17; x ^= x<<5; return ((x>>>0) / 4294967295); };
-    }
-    function stableShuffle(arr, seed){
-      const rnd = seedRng(seed);
-      return arr.map(v=>[rnd(),v]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]);
-    }
-    function naiveSanitize(html){
-      const tmp = document.createElement('div'); tmp.innerHTML = html;
-      tmp.querySelectorAll('*').forEach(n=>{
-        const allowed = ['P','BR','STRONG','EM','UL','OL','LI','H2','H3','A'];
-        if(!allowed.includes(n.tagName)) n.replaceWith(...n.childNodes);
-        if(n.tagName==='A'){
-          [...n.attributes].forEach(a=>{ if(a.name.startsWith('on')) n.removeAttribute(a.name); });
-          const href = (n.getAttribute('href')||'').trim().toLowerCase();
-          if(href.startsWith('javascript:')) n.removeAttribute('href');
-          n.setAttribute('rel','noopener noreferrer'); n.setAttribute('target','_blank');
-        }
-      });
-      return tmp.innerHTML;
-    }
+    /* ===== Utils ===== */
+    function seedRng(seed){
+      let x = 0; for (let i=0;i<seed.length;i++) x = (x<<5) - x + seed.charCodeAt(i) | 0;
+      return ()=>{ x ^= x<<13; x ^= x>>>17; x ^= x<<5; return ((x>>>0) / 4294967295); };
+    }
+    function stableShuffle(arr, seed){
+      const rnd = seedRng(seed);
+      return arr.map(v=>[rnd(),v]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]);
+    }
+    function naiveSanitize(html){
+      const tmp = document.createElement('div'); tmp.innerHTML = html;
+      tmp.querySelectorAll('*').forEach(n=>{
+        const allowed = ['P','BR','STRONG','EM','UL','OL','LI','H2','H3','A'];
+        if(!allowed.includes(n.tagName)) n.replaceWith(...n.childNodes);
+        if(n.tagName==='A'){
+          [...n.attributes].forEach(a=>{ if(a.name.startsWith('on')) n.removeAttribute(a.name); });
+          const href = (n.getAttribute('href')||'').trim().toLowerCase();
+          if(href.startsWith('javascript:')) n.removeAttribute('href');
+          n.setAttribute('rel','noopener noreferrer'); n.setAttribute('target','_blank');
+        }
+      });
+      return tmp.innerHTML;
+    }
 
-    /* ===== Rendu ===== */
-    const root = document.getElementById("lpf-quiz-root");
+    /* ===== Rendu ===== */
+    const root = document.getElementById("lpf-quiz-root");
 
-    function el(tag, attrs={}, children=[]) {
-      const n = document.createElement(tag);
-      Object.entries(attrs).forEach(([k,v])=>{
-        if(k==="class") n.className=v;
-        else if(k==="html") n.innerHTML=v;
-        else n.setAttribute(k,v);
-      });
-      (Array.isArray(children)?children:[children]).forEach(c=>{
-        if(typeof c==="string") n.appendChild(document.createTextNode(c));
-        else if(c) n.appendChild(c);
-      });
-      return n;
-    }
+    function el(tag, attrs={}, children=[]) {
+      const n = document.createElement(tag);
+      Object.entries(attrs).forEach(([k,v])=>{
+        if(k==="class") n.className=v;
+        else if(k==="html") n.innerHTML=v;
+        else n.setAttribute(k,v);
+      });
+      (Array.isArray(children)?children:[children]).forEach(c=>{
+        if(typeof c==="string") n.appendChild(document.createTextNode(c));
+        else if(c) n.appendChild(c);
+      });
+      return n;
+    }
 
-    function renderStart() {
-      root.innerHTML = "";
-      const card = el("div",{class:"lpf-card"});
-      card.appendChild(el("h2",{},TEXT.start.title));
-      TEXT.start.body.forEach(p=> card.appendChild(el("p",{},p)));
-      const actions = el("div",{class:"lpf-actions"},[
-        el("button",{class:"lpf-btn",type:"button"}, TEXT.start.cta)
-      ]);
-      actions.querySelector("button").addEventListener("click", renderInstructions);
-      card.appendChild(actions);
-      root.appendChild(card);
-      actions.querySelector("button").focus();
-    }
+    function renderStart() {
+      root.innerHTML = "";
+      const card = el("div",{class:"lpf-card"});
+      card.appendChild(el("h2",{},TEXT.start.title));
+      TEXT.start.body.forEach(p=> card.appendChild(el("p",{},p)));
+      const actions = el("div",{class:"lpf-actions"},[
+        el("button",{class:"lpf-btn",type:"button"}, TEXT.start.cta)
+      ]);
+      actions.querySelector("button").addEventListener("click", renderInstructions);
+      card.appendChild(actions);
+      root.appendChild(card);
+      actions.querySelector("button").focus();
+    }
 
-    function renderInstructions() {
-      root.innerHTML = "";
-      const card = el("div",{class:"lpf-card"});
-      card.appendChild(el("h2",{},TEXT.instructions.title));
-      TEXT.instructions.ps.forEach(html => card.appendChild(el("p",{html: naiveSanitize(html)})));
-      const actions = el("div",{class:"lpf-actions"},[
-        el("button",{class:"lpf-btn",type:"button"}, TEXT.instructions.cta)
-      ]);
-      actions.querySelector("button").addEventListener("click", ()=>renderQuiz(0));
-      card.appendChild(actions);
-      root.appendChild(card);
-      actions.querySelector("button").focus();
-    }
+    function renderInstructions() {
+      root.innerHTML = "";
+      const card = el("div",{class:"lpf-card"});
+      card.appendChild(el("h2",{},TEXT.instructions.title));
+      TEXT.instructions.ps.forEach(html => card.appendChild(el("p",{html: naiveSanitize(html)})));
+      const actions = el("div",{class:"lpf-actions"},[
+        el("button",{class:"lpf-btn",type:"button"}, TEXT.instructions.cta)
+      ]);
+      actions.querySelector("button").addEventListener("click", ()=>renderQuiz(0));
+      card.appendChild(actions);
+      root.appendChild(card);
+      actions.querySelector("button").focus();
+    }
 
-    /* État */
-    let answers = []; // [{id, block, profile}]
-    let stepIndex = 0;
+    /* État */
+    let answers = []; // [{id, block, profile}]
+    let stepIndex = 0;
 
-    function renderQuiz(index){
-      stepIndex = index;
-      root.innerHTML = "";
+    function renderQuiz(index){
+      stepIndex = index;
+      root.innerHTML = "";
 
-      /* Progression (ARIA + live) */
-      const progWrap = el("div",{class:"lpf-progress"});
-      const bar = el("div",{class:"lpf-progress-bar", role:"progressbar", "aria-valuemin":"0","aria-valuemax":"100","aria-label":"Progression du quiz"});
-      const fill = el("span",{id:"lpf-fill"});
-      bar.appendChild(fill);
-      const liveLabel = el("div",{class:"lpf-progress-label", "aria-live":"polite"}, el("span",{id:"lpf-label"},""));
-      progWrap.appendChild(bar); progWrap.appendChild(liveLabel);
-      root.appendChild(progWrap);
+      /* Progression (ARIA + live) */
+      const progWrap = el("div",{class:"lpf-progress"});
+      const bar = el("div",{class:"lpf-progress-bar", role:"progressbar", "aria-valuemin":"0","aria-valuemax":"100","aria-label":"Progression du quiz"});
+      const fill = el("span",{id:"lpf-fill"});
+      bar.appendChild(fill);
+      const liveLabel = el("div",{class:"lpf-progress-label", "aria-live":"polite"}, el("span",{id:"lpf-label"},""));
+      progWrap.appendChild(bar); progWrap.appendChild(liveLabel);
+      root.appendChild(progWrap);
 
-      const q = QUESTIONS[index];
+      const q = QUESTIONS[index];
 
-      /* Micro-intro */
-      if(index===0)  root.appendChild(el("div",{class:"lpf-section-intro"}, TEXT.micro.a));
-      if(index===4)  root.appendChild(el("div",{class:"lpf-section-intro"}, TEXT.micro.b));
-      if(index===8)  root.appendChild(el("div",{class:"lpf-section-intro"}, TEXT.micro.c));
+      /* Micro-intro */
+      if(index===0)  root.appendChild(el("div",{class:"lpf-section-intro"}, TEXT.micro.a));
+      if(index===4)  root.appendChild(el("div",{class:"lpf-section-intro"}, TEXT.micro.b));
+      if(index===8)  root.appendChild(el("div",{class:"lpf-section-intro"}, TEXT.micro.c));
 
-      /* Carte question */
-      const card = el("div",{class:"lpf-card"});
-      const fieldset = el("fieldset");
-      const legendId = q.id+"_legend";
-      fieldset.appendChild(el("legend",{class:"lpf-question", id:legendId}, q.text));
+      /* Carte question */
+      const card = el("div",{class:"lpf-card"});
+      const fieldset = el("fieldset");
+      const legendId = q.id+"_legend";
+      fieldset.appendChild(el("legend",{class:"lpf-question", id:legendId}, q.text));
 
-      const optsWrap = el("div",{class:"lpf-options"});
-      const prev = answers.find(a=>a.id===q.id);
-      const opts = stableShuffle(q.options.slice(), q.id);
-      opts.forEach((opt,i)=>{
-        const id = q.id+"_opt_"+i;
-        const labelEl = el("label",{class:"lpf-option", for:id});
-        const radio = el("input",{type:"radio",name:q.id,id,"data-profile":opt.profile});
-        if(prev && prev.profile===opt.profile) { radio.checked = true; labelEl.classList.add('is-checked'); }
-        labelEl.appendChild(radio);
-        labelEl.appendChild(el("span",{},opt.label));
-        optsWrap.appendChild(labelEl);
-      });
-      // fallback :has() → maj classes
-      optsWrap.addEventListener('change', (e)=>{
-        if(!document.documentElement.classList.contains('no-has')) return;
-        optsWrap.querySelectorAll('.lpf-option').forEach(l=>l.classList.remove('is-checked'));
-        const lbl = e.target.closest('.lpf-option'); if(lbl) lbl.classList.add('is-checked');
-      });
+      const optsWrap = el("div",{class:"lpf-options"});
+      const prev = answers.find(a=>a.id===q.id);
+      const opts = stableShuffle(q.options.slice(), q.id);
+      opts.forEach((opt,i)=>{
+        const id = q.id+"_opt_"+i;
+        const labelEl = el("label",{class:"lpf-option", for:id});
+        const radio = el("input",{type:"radio",name:q.id,id,"data-profile":opt.profile});
+        if(prev && prev.profile===opt.profile) { radio.checked = true; labelEl.classList.add('is-checked'); }
+        labelEl.appendChild(radio);
+        labelEl.appendChild(el("span",{},opt.label));
+        optsWrap.appendChild(labelEl);
+      });
+      // fallback :has() → maj classes
+      optsWrap.addEventListener('change', (e)=>{
+        if(!document.documentElement.classList.contains('no-has')) return;
+        optsWrap.querySelectorAll('.lpf-option').forEach(l=>l.classList.remove('is-checked'));
+        const lbl = e.target.closest('.lpf-option'); if(lbl) lbl.classList.add('is-checked');
+      });
 
-      fieldset.appendChild(optsWrap);
-      card.appendChild(fieldset);
+      fieldset.appendChild(optsWrap);
+      card.appendChild(fieldset);
 
-      const actions = el("div",{class:"lpf-actions"});
-      const prevBtn = el("button",{class:"lpf-btn ghost",type:"button"},"Revenir");
-      const nextBtn = el("button",{class:"lpf-btn",type:"button"},"Continuer");
-      actions.appendChild(prevBtn);
-      actions.appendChild(nextBtn);
-      card.appendChild(actions);
-      root.appendChild(card);
+      const actions = el("div",{class:"lpf-actions"});
+      const prevBtn = el("button",{class:"lpf-btn ghost",type:"button"},"Revenir");
+      const nextBtn = el("button",{class:"lpf-btn",type:"button"},"Continuer");
+      actions.appendChild(prevBtn);
+      actions.appendChild(nextBtn);
+      card.appendChild(actions);
+      root.appendChild(card);
 
-      /* Boutons / états */
-      prevBtn.disabled = (index===0);
-      nextBtn.disabled = !(prev); // activé si réponse existante
+      /* Boutons / états */
+      prevBtn.disabled = (index===0);
+      nextBtn.disabled = !(prev); // activé si réponse existante
 
-      card.addEventListener("change", (e)=>{
-        if(e.target && e.target.type==="radio"){ nextBtn.disabled = false; }
-      });
+      card.addEventListener("change", (e)=>{
+        if(e.target && e.target.type==="radio"){ nextBtn.disabled = false; }
+      });
 
-      prevBtn.addEventListener("click", ()=>{
-        if(index>0){ renderQuiz(index-1); }
-      });
+      prevBtn.addEventListener("click", ()=>{
+        if(index>0){ renderQuiz(index-1); }
+      });
 
-      nextBtn.addEventListener("click", ()=>{
-        const checked = card.querySelector("input[type=radio]:checked");
-        if(!checked) return;
-        // remplace la réponse de la question courante (pas de pop(), pas d'ordre supposé)
-        answers = answers.filter(a => a.id !== q.id);
-        answers.push({ id:q.id, block:q.block, profile: checked.getAttribute("data-profile") });
+      nextBtn.addEventListener("click", ()=>{
+        const checked = card.querySelector("input[type=radio]:checked");
+        if(!checked) return;
+        // remplace la réponse de la question courante (pas de pop(), pas d'ordre supposé)
+        answers = answers.filter(a => a.id !== q.id);
+        answers.push({ id:q.id, block:q.block, profile: checked.getAttribute("data-profile") });
 
-        if(index===3){ renderBreak("after4", index+1); return; }
-        if(index===7){ renderBreak("after8", index+1); return; }
-        if(index < QUESTIONS.length-1) renderQuiz(index+1);
-        else renderFinalGate();
-      });
+        if(index===3){ renderBreak("after4", index+1); return; }
+        if(index===7){ renderBreak("after8", index+1); return; }
+        if(index < QUESTIONS.length-1) renderQuiz(index+1);
+        else renderFinalGate();
+      });
 
-      /* Progression affichée + ARIA + live */
-      const pct = PROG[index];
-      fill.style.width = pct + "%";
-      bar.setAttribute("aria-valuenow", pct);
-      const labelSpan = document.getElementById("lpf-label");
-      if(labelSpan) labelSpan.textContent = pct + " %";
+      /* Progression affichée + ARIA + live */
+      const pct = PROG[index];
+      fill.style.width = pct + "%";
+      bar.setAttribute("aria-valuenow", pct);
+      const labelSpan = document.getElementById("lpf-label");
+      if(labelSpan) labelSpan.textContent = pct + " %";
 
-      /* Focus management : focus 1ʳᵉ radio sinon legend */
-      const firstRadio = fieldset.querySelector('input[type=radio]');
-      (firstRadio || fieldset.querySelector('legend')).focus();
-    }
+      /* Focus management : focus 1ʳᵉ radio sinon legend */
+      const firstRadio = fieldset.querySelector('input[type=radio]');
+      (firstRadio || fieldset.querySelector('legend')).focus();
+    }
 
-    function renderBreak(which, nextIndex){
-      root.innerHTML = "";
-      const p = PROG[nextIndex-1];
-      const progWrap = el("div",{class:"lpf-progress"});
-      const bar = el("div",{class:"lpf-progress-bar", role:"progressbar","aria-valuemin":"0","aria-valuemax":"100","aria-valuenow":String(p),"aria-label":"Progression du quiz"});
-      bar.appendChild(el("span",{style:"width:"+p+"%"}));
-      const liveLabel = el("div",{class:"lpf-progress-label", "aria-live":"polite"}, p+" %");
-      progWrap.appendChild(bar); progWrap.appendChild(liveLabel);
-      root.appendChild(progWrap);
+    function renderBreak(which, nextIndex){
+      root.innerHTML = "";
+      const p = PROG[nextIndex-1];
+      const progWrap = el("div",{class:"lpf-progress"});
+      const bar = el("div",{class:"lpf-progress-bar", role:"progressbar","aria-valuemin":"0","aria-valuemax":"100","aria-valuenow":String(p),"aria-label":"Progression du quiz"});
+      bar.appendChild(el("span",{style:"width:"+p+"%"}));
+      const liveLabel = el("div",{class:"lpf-progress-label", "aria-live":"polite"}, p+" %");
+      progWrap.appendChild(bar); progWrap.appendChild(liveLabel);
+      root.appendChild(progWrap);
 
-      const data = TEXT.breaks[which];
-      const card = el("div",{class:"lpf-card lpf-break"});
-      const h = el("h3",{}, data.h);
-      card.appendChild(h);
-      card.appendChild(el("p",{}, data.t));
-      card.appendChild(el("p",{}, data.s));
-      const actions = el("div",{class:"lpf-actions"},[
-        el("button",{class:"lpf-btn",type:"button"},"Continuer")
-      ]);
-      actions.querySelector("button").addEventListener("click", ()=>renderQuiz(nextIndex));
-      card.appendChild(actions);
-      root.appendChild(card);
-      h.focus();
-    }
+      const data = TEXT.breaks[which];
+      const card = el("div",{class:"lpf-card lpf-break"});
+      const h = el("h3",{}, data.h);
+      card.appendChild(h);
+      card.appendChild(el("p",{}, data.t));
+      card.appendChild(el("p",{}, data.s));
+      const actions = el("div",{class:"lpf-actions"},[
+        el("button",{class:"lpf-btn",type:"button"},"Continuer")
+      ]);
+      actions.querySelector("button").addEventListener("click", ()=>renderQuiz(nextIndex));
+      card.appendChild(actions);
+      root.appendChild(card);
+      h.focus();
+    }
 
-    function renderFinalGate(){
-      root.innerHTML = "";
-      const progWrap = el("div",{class:"lpf-progress"});
-      const bar = el("div",{class:"lpf-progress-bar", role:"progressbar","aria-valuemin":"0","aria-valuemax":"100","aria-valuenow":"100","aria-label":"Progression du quiz"});
-      bar.appendChild(el("span",{style:"width:100%"}));
-      const liveLabel = el("div",{class:"lpf-progress-label", "aria-live":"polite"},"100 %");
-      progWrap.appendChild(bar); progWrap.appendChild(liveLabel);
-      root.appendChild(progWrap);
+    function renderFinalGate(){
+      root.innerHTML = "";
+      const progWrap = el("div",{class:"lpf-progress"});
+      const bar = el("div",{class:"lpf-progress-bar", role:"progressbar","aria-valuemin":"0","aria-valuemax":"100","aria-valuenow":"100","aria-label":"Progression du quiz"});
+      bar.appendChild(el("span",{style:"width:100%"}));
+      const liveLabel = el("div",{class:"lpf-progress-label", "aria-live":"polite"},"100 %");
+      progWrap.appendChild(bar); progWrap.appendChild(liveLabel);
+      root.appendChild(progWrap);
 
-      const data = TEXT.breaks.final;
-      const card = el("div",{class:"lpf-card lpf-break"});
-      const h = el("h3",{}, data.h);
-      card.appendChild(h);
-      card.appendChild(el("p",{}, data.t));
-      const actions = el("div",{class:"lpf-actions"},[
-        el("button",{class:"lpf-btn",type:"button"}, data.cta)
-      ]);
-      actions.querySelector("button").addEventListener("click", renderResult);
-      card.appendChild(actions);
-      root.appendChild(card);
-      h.focus();
-    }
+      const data = TEXT.breaks.final;
+      const card = el("div",{class:"lpf-card lpf-break"});
+      const h = el("h3",{}, data.h);
+      card.appendChild(h);
+      card.appendChild(el("p",{}, data.t));
+      const actions = el("div",{class:"lpf-actions"},[
+        el("button",{class:"lpf-btn",type:"button"}, data.cta)
+      ]);
+      actions.querySelector("button").addEventListener("click", renderResult);
+      card.appendChild(actions);
+      root.appendChild(card);
+      h.focus();
+    }
 
-    /* ===== Scoring ===== */
-    function computeScores(){
-      const profiles = ["gardien","organisateur","resolveur","communicant","expert","strategique","collaborateur","curieux"];
-      const a={}, b={}, c={}; profiles.forEach(p=>{ a[p]=0; b[p]=0; c[p]=0; });
+    /* ===== Scoring ===== */
+    function computeScores(){
+      const profiles = ["gardien","organisateur","resolveur","communicant","expert","strategique","collaborateur","curieux"];
+      const a={}, b={}, c={}; profiles.forEach(p=>{ a[p]=0; b[p]=0; c[p]=0; });
 
-      answers.forEach(ans=>{
-        if(ans.block==="a") a[ans.profile] = (a[ans.profile]||0)+1;
-        if(ans.block==="b") b[ans.profile] = (b[ans.profile]||0)+1;
-        if(ans.block==="c") c[ans.profile] = (c[ans.profile]||0)+1;
-      });
+      answers.forEach(ans=>{
+        if(ans.block==="a") a[ans.profile] = (a[ans.profile]||0)+1;
+        if(ans.block==="b") b[ans.profile] = (b[ans.profile]||0)+1;
+        if(ans.block==="c") c[ans.profile] = (c[ans.profile]||0)+1;
+      });
 
-      const argmax = (obj) => { let best=null, bestV=-Infinity; for(const [k,v] of Object.entries(obj)){ if(v>bestV){best=k; bestV=v;} } return best; };
-      const domA = argmax(a);
-      const domB = argmax(b);
-      const domC = argmax(c);
+      const argmax = (obj) => { let best=null, bestV=-Infinity; for(const [k,v] of Object.entries(obj)){ if(v>bestV){best=k; bestV=v;} } return best; };
+      const domA = argmax(a);
+      const domB = argmax(b);
+      const domC = argmax(c);
 
-      const weighted = {};
-      profiles.forEach(p=>{
-        weighted[p] = (WEIGHTS.a*(a[p]||0)) + (WEIGHTS.b*(b[p]||0)) + (WEIGHTS.c*(c[p]||0));
-      });
-      const maxV = Math.max(...profiles.map(p=>weighted[p]));
-      const cands = profiles.filter(p=> weighted[p]===maxV);
+      const weighted = {};
+      profiles.forEach(p=>{
+        weighted[p] = (WEIGHTS.a*(a[p]||0)) + (WEIGHTS.b*(b[p]||0)) + (WEIGHTS.c*(c[p]||0));
+      });
+      const maxV = Math.max(...profiles.map(p=>weighted[p]));
+      const cands = profiles.filter(p=> weighted[p]===maxV);
 
-      let global = cands[0];
-      if(cands.length>1){
-        if(domA && cands.includes(domA)) global = domA;
-        else if(domB && cands.includes(domB)) global = domB;
-        else { for(const pr of TIE){ if(cands.includes(pr)){ global = pr; break; } } }
-      }
-      return { global, domA, domB, domC };
-    }
+      let global = cands[0];
+      if(cands.length>1){
+        if(domA && cands.includes(domA)) global = domA;
+        else if(domB && cands.includes(domB)) global = domB;
+        else { for(const pr of TIE){ if(cands.includes(pr)){ global = pr; break; } } }
+      }
+      return { global, domA, domB, domC };
+    }
 
-    /* ===== Rendu du résultat (injecte title + body en HTML) ===== */
-    function renderResult(){
-      const s = computeScores();
-      const R = RESULTS[s.global] || RESULTS.organisateur; // fallback
+    /* ===== Rendu du résultat (injecte title + body en HTML) - MODIFIÉ POUR EMAIL-WALL ===== */
+    function renderResult(){
+      const s = computeScores();
+      const R = RESULTS[s.global] || RESULTS.organisateur; // fallback
 
-      root.innerHTML = "";
+      root.innerHTML = "";
 
-      const card = el("div",{class:"lpf-card lpf-result"});
-      const titleEl = el("h2",{}, R.title);
-      card.appendChild(titleEl);
-      card.appendChild(el("div",{class:"body", html: naiveSanitize(R.body)}));
+      const card = el("div",{class:"lpf-card lpf-result"});
+      const titleEl = el("h2",{}, R.title);
+      card.appendChild(titleEl);
+      card.appendChild(el("div",{class:"body", html: naiveSanitize(R.body)}));
 
-      const actions = el("div",{class:"lpf-actions"},[
-        el("a",{class:"lpf-btn",href:GUIDE_URL,target:"_blank",rel:"noopener noreferrer"},"Télécharger mon guide personnalisé")
-      ]);
-      card.appendChild(actions);
+      // MODIFICATION 2 : Bouton remplacé par un simple bouton qui fait défiler vers le formulaire d'e-mail.
+      const actions = el("div",{class:"lpf-actions"},[
+        el("button",{class:"lpf-btn",type:"button", onclick:"document.getElementById('email-block').scrollIntoView({behavior: 'smooth'})"},"Poursuivre pour recevoir le guide")
+      ]);
+      card.appendChild(actions);
 
-      root.appendChild(card);
+      root.appendChild(card);
 
-      // Focus + analytics
-      titleEl.focus();
-      try { window.dispatchEvent(new CustomEvent('lpf-quiz-finished', {detail:{profile:s.global, domA:s.domA, domB:s.domB, domC:s.domC}})); } catch(e){}
-    }
+      // Focus + analytics
+      titleEl.focus();
+      try { window.dispatchEvent(new CustomEvent('lpf-quiz-finished', {detail:{profile:s.global, domA:s.domA, domB:s.domB, domC:s.domC}})); } catch(e){}
+    }
 
-    /* Init */
-    renderStart();
-  })();
-  </script>
+    /* Init */
+    renderStart();
+  })();
+  </script>
 
-  <!-- ========================= -->
-  <!-- Bloc e-mail + JS d’envoi -->
-  <!-- ========================= -->
-  <div id="email-block">
-    <h2 style="margin-bottom:8px;">Recevez votre guide personnalisé 📘</h2>
-    <p style="margin-top:0;">Entrez votre e-mail pour recevoir votre profil et le guide La Paie Facile.</p>
-    <input id="email" type="email" placeholder="Votre e-mail">
-    <br>
-    <button id="sendEmail" class="lpf-btn" style="margin-top:14px;">Envoyer mon profil</button>
-    <div id="feedback" class="feedback"></div>
-  </div>
+        <div id="email-block">
+    <h2 style="margin-bottom:8px;">Recevez votre guide personnalisé 📘</h2>
+        <p style="margin-top:0;">Entrez votre e-mail pour recevoir votre profil et le guide. L'envoi se fait dans votre boîte de réception **(Vérifiez bien l'adresse !)**</p>
+    <input id="email" type="email" placeholder="Votre e-mail">
+    <br>
+    <button id="sendEmail" class="lpf-btn" style="margin-top:14px;">Envoyer mon profil</button>
+    <div id="feedback" class="feedback"></div>
+  </div>
 
-  <script>
-    const emailInput = document.getElementById("email");
-    const sendBtn = document.getElementById("sendEmail");
-    const feedbackEl = document.getElementById("feedback");
+  <script>
+    const emailInput = document.getElementById("email");
+    const sendBtn = document.getElementById("sendEmail");
+    const feedbackEl = document.getElementById("feedback");
 
-    // Le quiz émet cet événement à la fin (déjà géré dans ton code)
-    window._lpfProfile = "";
-    window.addEventListener("lpf-quiz-finished", (ev) => {
-      window._lpfProfile = ev.detail?.profile || "";
-    });
+    // Le quiz émet cet événement à la fin (déjà géré dans ton code)
+    window._lpfProfile = "";
+    window.addEventListener("lpf-quiz-finished", (ev) => {
+      window._lpfProfile = ev.detail?.profile || "";
+    });
 
-    async function sendEmail() {
-      const email = (emailInput.value || "").trim();
-      const profile = window._lpfProfile || "";
-      if (!email) {
-        feedbackEl.textContent = "Veuillez saisir votre adresse e-mail.";
-        feedbackEl.style.color = "red";
-        return;
-      }
-      sendBtn.disabled = true;
-      feedbackEl.textContent = "⏳ Envoi en cours…";
-      feedbackEl.style.color = "#555";
+    async function sendEmail() {
+      const email = (emailInput.value || "").trim();
+      const profile = window._lpfProfile || "";
+      if (!email) {
+        feedbackEl.textContent = "Veuillez saisir votre adresse e-mail.";
+        feedbackEl.style.color = "red";
+        return;
+      }
+      sendBtn.disabled = true;
+      feedbackEl.textContent = "⏳ Envoi en cours…";
+      feedbackEl.style.color = "#555";
 
-      try {
-        const res = await fetch("/submit-email", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, profile })
-        });
-        const j = await res.json();
-        if (j.ok) {
-          feedbackEl.textContent = "✅ Merci ! Votre profil a bien été envoyé. Vous recevrez votre guide sous peu.";
-          feedbackEl.style.color = "green";
-          emailInput.value = "";
-        } else {
-          feedbackEl.textContent = "❌ Erreur : " + (j.error || "impossible d’envoyer vos données");
-          feedbackEl.style.color = "red";
-        }
-      } catch (e) {
-        feedbackEl.textContent = "❌ Erreur réseau : réessayez dans un instant.";
-        feedbackEl.style.color = "red";
-      } finally {
-        sendBtn.disabled = false;
-      }
-    }
+      try {
+        const res = await fetch("/submit-email", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, profile })
+        });
+        const j = await res.json();
+        if (j.ok) {
+          feedbackEl.textContent = "✅ Merci ! Votre profil a bien été envoyé. Vous recevrez votre guide sous peu.";
+          feedbackEl.style.color = "green";
+          emailInput.value = "";
+        } else {
+          feedbackEl.textContent = "❌ Erreur : " + (j.error || "impossible d’envoyer vos données");
+          feedbackEl.style.color = "red";
+        }
+      } catch (e) {
+        feedbackEl.textContent = "❌ Erreur réseau : réessayez dans un instant.";
+        feedbackEl.style.color = "red";
+      } finally {
+        sendBtn.disabled = false;
+      }
+    }
 
-    sendBtn.addEventListener("click", sendEmail);
-    emailInput.addEventListener("keypress", (e) => { if (e.key === "Enter") sendEmail(); });
-  </script>
+    sendBtn.addEventListener("click", sendEmail);
+    emailInput.addEventListener("keypress", (e) => { if (e.key === "Enter") sendEmail(); });
+  </script>
 </body>
 </html>
-
