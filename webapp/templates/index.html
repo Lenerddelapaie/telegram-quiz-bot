@@ -7,30 +7,23 @@
   <meta name="description" content="Découvrez si le métier de gestionnaire de paie est fait pour vous grâce à ce quiz interactif La Paie Facile.">
 
   <style>
-    /* Global */
     :root { --green:#2AFF00; }
     body { margin:0; background:#fff; color:#111; font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
-    /* bloc email */
-    #email-block { max-width:860px; margin:40px auto; padding:0 16px; text-align:center; }
-    #email { padding:12px 14px; border:2px solid #000; border-radius:10px; width:70%; max-width:420px; font-size:1rem; }
-    .lpf-btn { background:var(--green); color:#000; font-weight:900; font-size:1.06rem; padding:12px 18px; border:none; border-radius:12px; cursor:pointer; box-shadow:0 3px 0 rgba(0,0,0,.7); transition:transform .12s, background .12s; }
-    .lpf-btn:hover { background:#20de00; transform:translateY(-1px); }
-    .feedback { font-weight:600; margin-top:10px; }
 
-    /* ===== Styles LPF (scopés) ===== */
-    #lpf-quiz-root { font-family:inherit; color:#111; max-width:860px; margin:32px auto; padding:0 16px; }
+    /* ===== Zone Quiz ===== */
+    #lpf-quiz-root { color:#111; max-width:860px; margin:32px auto; padding:0 16px; }
     #lpf-quiz-root * { box-sizing:border-box; }
     #lpf-quiz-root .lpf-card { background:#fff; border:6px solid #000; border-radius:24px; padding:24px 20px; margin:20px 0; box-shadow:0 6px 0 rgba(0,0,0,.06); }
     #lpf-quiz-root h2 { font-size:1.6rem; margin:0 0 10px; }
     #lpf-quiz-root p { line-height:1.55; }
 
     /* Progression */
-    #lpf-quiz-root .lpf-progress { display:flex; gap:10px; align-items:center; margin:12px 0 8px; }
+    #lpf-quiz-root .lpf-progress { display:flex; gap:10px; align-items:center; margin: 12px 0 8px; }
     #lpf-quiz-root .lpf-progress-bar { flex:1; background:#eee; height:10px; border-radius:6px; border:2px solid #000; position:relative; }
-    #lpf-quiz-root .lpf-progress-bar span { display:block; background:var(--green); height:100%; border-radius:4px; transition:width .2s ease; width:0%; }
+    #lpf-quiz-root .lpf-progress-bar span { display:block; background:var(--green); height:100%; border-radius:4px; transition: width .2s ease; width:0%; }
     #lpf-quiz-root .lpf-progress-label { min-width:120px; font-weight:800; text-align:right; }
 
-    /* Section micro-intros */
+    /* Micro-intros */
     #lpf-quiz-root .lpf-section-intro { border:3px dashed #000; border-radius:16px; padding:12px 14px; margin:12px 0; background:#f9f9f9; font-weight:600; }
 
     /* Questions & options */
@@ -38,20 +31,25 @@
     #lpf-quiz-root fieldset { border:0; padding:0; margin:0; }
     #lpf-quiz-root legend.lpf-question { padding:0; }
     #lpf-quiz-root .lpf-options { display:grid; gap:10px; }
-    #lpf-quiz-root .lpf-option { display:flex; gap:10px; align-items:flex-start; padding:12px 14px; border:2px solid #000; border-radius:12px; background:#fff; cursor:pointer; transition:transform .08s ease; }
-    #lpf-quiz-root .lpf-option:hover { transform:translateY(-1px); }
+    #lpf-quiz-root .lpf-option { display:flex; gap:10px; align-items:flex-start; padding:12px 14px; border:2px solid #000; border-radius:12px; background:#fff; cursor:pointer; transition: transform .08s ease; }
+    #lpf-quiz-root .lpf-option:hover { transform: translateY(-1px); }
     #lpf-quiz-root .lpf-option input { margin-top:2px; }
-    /* Sélection visible */
     #lpf-quiz-root .lpf-option:has(input:checked) { outline:3px solid #000; outline-offset:2px; box-shadow:0 0 0 3px rgba(0,0,0,.05) inset; }
     .no-has #lpf-quiz-root .lpf-option.is-checked { outline:3px solid #000; outline-offset:2px; box-shadow:0 0 0 3px rgba(0,0,0,.05) inset; }
 
-    /* Focus */
-    #lpf-quiz-root .lpf-option:focus-visible, #lpf-quiz-root .lpf-btn:focus-visible { outline:3px solid #000; outline-offset:3px; border-radius:10px; }
-
-    /* Actions / boutons */
-    #lpf-quiz-root .lpf-actions { display:flex; gap:10px; justify-content:flex-end; margin-top:18px; }
+    /* Boutons */
+    #lpf-quiz-root .lpf-btn { background:var(--green); color:#000; font-weight:900; font-size:1.06rem; padding:12px 18px; border:none; border-radius:12px; cursor:pointer; box-shadow:0 3px 0 rgba(0,0,0,.7); transition: transform .12s, background .12s; }
+    #lpf-quiz-root .lpf-btn:hover { background:#20de00; transform: translateY(-1px); }
     #lpf-quiz-root .lpf-btn.ghost { background:#fff; border:2px solid #000; box-shadow:none; font-weight:800; }
     #lpf-quiz-root .lpf-btn[disabled] { opacity:.5; cursor:not-allowed; }
+    #lpf-quiz-root .lpf-btn:focus-visible, #lpf-quiz-root .lpf-option:focus-visible { outline:3px solid #000; outline-offset:3px; border-radius:10px; }
+
+    /* Actions: Continuer + Revenir (lien) */
+    #lpf-quiz-root .lpf-actions { display:flex; gap:10px; justify-content:flex-end; margin-top:18px; }
+    #lpf-quiz-root .lpf-actions--quiz { flex-direction:column; align-items:flex-end; gap:6px; }
+    #lpf-quiz-root .lpf-back-link { font-size:.92rem; background:none; border:0; padding:0; color:#111; text-decoration:underline; cursor:pointer; }
+    #lpf-quiz-root .lpf-back-link[disabled]{ opacity:.5; cursor:default; text-decoration:none; }
+    #lpf-quiz-root .lpf-back-link:focus-visible{ outline:3px solid #000; outline-offset:3px; border-radius:6px; }
 
     /* Break & Result */
     #lpf-quiz-root .lpf-break h3 { margin:0 0 6px; }
@@ -59,12 +57,18 @@
     #lpf-quiz-root .lpf-result h2 { margin-top:0; }
     #lpf-quiz-root .lpf-result .body { margin-top:8px; }
 
-    /* Reduced motion */
-    @media (prefers-reduced-motion: reduce){ #lpf-quiz-root * { transition:none!important; animation:none!important; } }
+    /* Bloc e-mail */
+    #email-block[hidden]{ display:none !important; }
+    #email-block { max-width:860px; margin:40px auto; padding:0 16px; text-align:center; }
+    #email { padding:12px 14px; border:2px solid #000; border-radius:10px; width:70%; max-width:420px; font-size:1rem; }
+    .feedback { font-weight:600; margin-top:10px; }
 
+    @media (prefers-reduced-motion: reduce){ #lpf-quiz-root * { transition:none!important; animation:none!important; } }
     @media (max-width:560px){
       #lpf-quiz-root .lpf-actions { flex-direction:column; }
       #lpf-quiz-root .lpf-btn, #lpf-quiz-root .lpf-btn.ghost { width:100%; }
+      #lpf-quiz-root .lpf-actions--quiz { align-items:stretch; }
+      #lpf-quiz-root .lpf-back-link { text-align:right; }
     }
   </style>
 </head>
@@ -75,7 +79,6 @@
   <script>
   (function(){
     /* ====== PARAMS ====== */
-    const GUIDE_URL = ""; // garde vide pour forcer passage email
     const PROG = [20,30,40,50,55,60,70,75,80,85,95,100];
 
     /* Détection support :has() (fallback classe .no-has) */
@@ -204,7 +207,7 @@
     const WEIGHTS = { a:0.5, b:0.3, c:0.2 };
     const TIE = ["gardien","organisateur","expert","resolveur","communicant","collaborateur","strategique","curieux"];
 
-    /* ===== Résultats ===== */
+    /* Résultats */
     const RESULTS = {
       gardien: { title:"Vous êtes : Gardien de l’Équité", body:`Le gestionnaire de paie est le garant de l’équité au sein de l’entreprise. Son rôle ne se limite pas à établir des bulletins de paie : il veille à ce que chaque salarié reçoive exactement ce qui lui est dû, conformément à la législation sociale en constante évolution. Cela implique la préparation rigoureuse des salaires, la gestion précise des déclarations sociales obligatoires, la prise en compte des absences, primes, heures supplémentaires, ainsi que le respect scrupuleux des échéances.
 <br><br>C’est un métier à haute responsabilité, au croisement du juridique, du technique et de l’organisation, où chaque erreur peut avoir des conséquences financières et humaines majeures.
@@ -242,23 +245,18 @@
 <br><br><strong>👉 Pour structurer vos apprentissages et progresser efficacement et recevoir votre guide complet, renseignez votre adresse e-mail dans le bloc ci-dessous.</strong>` }
     };
 
-    /* ===== Utils ===== */
-    function seedRng(seed){
-      let x = 0; for (let i=0;i<seed.length;i++) x = (x<<5) - x + seed.charCodeAt(i) | 0;
-      return ()=>{ x ^= x<<13; x ^= x>>>17; x ^= x<<5; return ((x>>>0) / 4294967295); };
-    }
-    function stableShuffle(arr, seed){
-      const rnd = seedRng(seed);
-      return arr.map(v=>[rnd(),v]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]);
-    }
+    /* Utils */
+    function seedRng(seed){ let x=0; for(let i=0;i<seed.length;i++) x=(x<<5)-x+seed.charCodeAt(i)|0;
+      return ()=>{ x^=x<<13; x^=x>>>17; x^=x<<5; return ((x>>>0)/4294967295); }; }
+    function stableShuffle(arr, seed){ const rnd=seedRng(seed); return arr.map(v=>[rnd(),v]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]); }
     function naiveSanitize(html){
-      const tmp = document.createElement('div'); tmp.innerHTML = html;
+      const tmp=document.createElement('div'); tmp.innerHTML=html;
       tmp.querySelectorAll('*').forEach(n=>{
-        const allowed = ['P','BR','STRONG','EM','UL','OL','LI','H2','H3','A'];
+        const allowed=['P','BR','STRONG','EM','UL','OL','LI','H2','H3','A'];
         if(!allowed.includes(n.tagName)) n.replaceWith(...n.childNodes);
         if(n.tagName==='A'){
           [...n.attributes].forEach(a=>{ if(a.name.startsWith('on')) n.removeAttribute(a.name); });
-          const href = (n.getAttribute('href')||'').trim().toLowerCase();
+          const href=(n.getAttribute('href')||'').trim().toLowerCase();
           if(href.startsWith('javascript:')) n.removeAttribute('href');
           n.setAttribute('rel','noopener noreferrer'); n.setAttribute('target','_blank');
         }
@@ -266,11 +264,27 @@
       return tmp.innerHTML;
     }
 
-    /* ===== Rendu ===== */
+    /* Progress helper: anime 0 -> target% */
+    function animateProgress(target=90, duration=4000){
+      const fill=document.getElementById('progress-fill');
+      const label=document.getElementById('progress-label');
+      if(!fill||!label) return;
+      const start=performance.now(), startVal=0, endVal=Math.max(0,Math.min(100,target));
+      function tick(now){
+        const t=Math.min(1,(now-start)/duration);
+        const value=Math.round(startVal+(endVal-startVal)*t);
+        fill.style.width=value+"%";
+        label.textContent=value+" %";
+        if(t<1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    /* Rendu */
     const root = document.getElementById("lpf-quiz-root");
 
     function el(tag, attrs={}, children=[]){
-      const n = document.createElement(tag);
+      const n=document.createElement(tag);
       Object.entries(attrs).forEach(([k,v])=>{
         if(k==="class") n.className=v;
         else if(k==="html") n.innerHTML=v;
@@ -284,11 +298,11 @@
     }
 
     function renderStart(){
-      root.innerHTML = "";
-      const card = el("div",{class:"lpf-card"});
+      root.innerHTML="";
+      const card=el("div",{class:"lpf-card"});
       card.appendChild(el("h2",{},TEXT.start.title));
       TEXT.start.body.forEach(p=> card.appendChild(el("p",{},p)));
-      const actions = el("div",{class:"lpf-actions"},[
+      const actions=el("div",{class:"lpf-actions"},[
         el("button",{class:"lpf-btn",type:"button"}, TEXT.start.cta)
       ]);
       actions.querySelector("button").addEventListener("click", renderInstructions);
@@ -298,11 +312,11 @@
     }
 
     function renderInstructions(){
-      root.innerHTML = "";
-      const card = el("div",{class:"lpf-card"});
+      root.innerHTML="";
+      const card=el("div",{class:"lpf-card"});
       card.appendChild(el("h2",{},TEXT.instructions.title));
       TEXT.instructions.ps.forEach(html => card.appendChild(el("p",{html: naiveSanitize(html)})));
-      const actions = el("div",{class:"lpf-actions"},[
+      const actions=el("div",{class:"lpf-actions"},[
         el("button",{class:"lpf-btn",type:"button"}, TEXT.instructions.cta)
       ]);
       actions.querySelector("button").addEventListener("click", ()=>renderQuiz(0));
@@ -311,209 +325,170 @@
       actions.querySelector("button").focus();
     }
 
-    /* État */
-    let answers = []; // [{id, block, profile}]
-    let stepIndex = 0;
+    let answers=[]; let stepIndex=0;
 
     function renderQuiz(index){
-      stepIndex = index;
-      root.innerHTML = "";
+      stepIndex=index; root.innerHTML="";
 
-      /* Progression (ARIA + live) */
-      const progWrap = el("div",{class:"lpf-progress"});
-      const bar = el("div",{class:"lpf-progress-bar", role:"progressbar", "aria-valuemin":"0","aria-valuemax":"100","aria-label":"Progression du quiz"});
-      const fill = el("span",{id:"lpf-fill"});
-      bar.appendChild(fill);
-      const liveLabel = el("div",{class:"lpf-progress-label", "aria-live":"polite"}, el("span",{id:"lpf-label"},""));
+      /* Progression */
+      const progWrap=el("div",{class:"lpf-progress"});
+      const bar=el("div",{class:"lpf-progress-bar", role:"progressbar","aria-valuemin":"0","aria-valuemax":"100","aria-label":"Progression du quiz"});
+      const fill=el("span",{id:"lpf-fill"}); bar.appendChild(fill);
+      const liveLabel=el("div",{class:"lpf-progress-label","aria-live":"polite"}, el("span",{id:"lpf-label"},""));
       progWrap.appendChild(bar); progWrap.appendChild(liveLabel);
       root.appendChild(progWrap);
 
-      const q = QUESTIONS[index];
+      const q=QUESTIONS[index];
 
-      /* Micro-intro */
       if(index===0)  root.appendChild(el("div",{class:"lpf-section-intro"}, TEXT.micro.a));
       if(index===4)  root.appendChild(el("div",{class:"lpf-section-intro"}, TEXT.micro.b));
       if(index===8)  root.appendChild(el("div",{class:"lpf-section-intro"}, TEXT.micro.c));
 
-      /* Carte question */
-      const card = el("div",{class:"lpf-card"});
-      const fieldset = el("fieldset");
-      const legendId = q.id+"_legend";
-      fieldset.appendChild(el("legend",{class:"lpf-question", id:legendId}, q.text));
+      const card=el("div",{class:"lpf-card"});
+      const fieldset=el("fieldset");
+      fieldset.appendChild(el("legend",{class:"lpf-question", id:q.id+"_legend"}, q.text));
 
-      const optsWrap = el("div",{class:"lpf-options"});
-      const prev = answers.find(a=>a.id===q.id);
-      const opts = stableShuffle(q.options.slice(), q.id);
+      const optsWrap=el("div",{class:"lpf-options"});
+      const prev=answers.find(a=>a.id===q.id);
+      const opts=stableShuffle(q.options.slice(), q.id);
       opts.forEach((opt,i)=>{
-        const id = q.id+"_opt_"+i;
-        const labelEl = el("label",{class:"lpf-option", for:id});
-        const radio = el("input",{type:"radio",name:q.id,id,"data-profile":opt.profile});
-        if(prev && prev.profile===opt.profile){ radio.checked = true; labelEl.classList.add('is-checked'); }
+        const id=q.id+"_opt_"+i;
+        const labelEl=el("label",{class:"lpf-option", for:id});
+        const radio=el("input",{type:"radio",name:q.id,id,"data-profile":opt.profile});
+        if(prev && prev.profile===opt.profile){ radio.checked=true; labelEl.classList.add('is-checked'); }
         labelEl.appendChild(radio);
         labelEl.appendChild(el("span",{},opt.label));
         optsWrap.appendChild(labelEl);
       });
-      // fallback :has() → maj classes
-      optsWrap.addEventListener('change', (e)=>{
+      optsWrap.addEventListener('change',(e)=>{
         if(!document.documentElement.classList.contains('no-has')) return;
         optsWrap.querySelectorAll('.lpf-option').forEach(l=>l.classList.remove('is-checked'));
-        const lbl = e.target.closest('.lpf-option'); if(lbl) lbl.classList.add('is-checked');
+        const lbl=e.target.closest('.lpf-option'); if(lbl) lbl.classList.add('is-checked');
       });
 
       fieldset.appendChild(optsWrap);
       card.appendChild(fieldset);
 
-      const actions = el("div",{class:"lpf-actions"});
-      const prevBtn = el("button",{class:"lpf-btn ghost",type:"button"},"Revenir");
-      const nextBtn = el("button",{class:"lpf-btn",type:"button"},"Continuer");
-      actions.appendChild(prevBtn);
+      /* Actions: Continuer + Revenir (lien dessous) */
+      const actions=el("div",{class:"lpf-actions lpf-actions--quiz"});
+      const nextBtn=el("button",{class:"lpf-btn",type:"button"},"Continuer");
+      const backLink=el("button",{class:"lpf-back-link",type:"button"},"Revenir");
       actions.appendChild(nextBtn);
+      actions.appendChild(backLink);
       card.appendChild(actions);
       root.appendChild(card);
 
-      /* Boutons / états */
-      prevBtn.disabled = (index===0);
-      nextBtn.disabled = !(prev); // activé si réponse existante
+      /* États + events */
+      backLink.disabled=(index===0);
+      nextBtn.disabled=!(prev);
+      card.addEventListener("change",(e)=>{ if(e.target && e.target.type==="radio"){ nextBtn.disabled=false; } });
 
-      card.addEventListener("change", (e)=>{
-        if(e.target && e.target.type==="radio"){ nextBtn.disabled = false; }
-      });
-
-      prevBtn.addEventListener("click", ()=>{
-        if(index>0){ renderQuiz(index-1); }
-      });
+      backLink.addEventListener("click", ()=>{ if(index>0) renderQuiz(index-1); });
 
       nextBtn.addEventListener("click", ()=>{
-        const checked = card.querySelector("input[type=radio]:checked");
-        if(!checked) return;
-        // remplace la réponse de la question courante
-        answers = answers.filter(a => a.id !== q.id);
+        const checked=card.querySelector("input[type=radio]:checked"); if(!checked) return;
+        answers=answers.filter(a=>a.id!==q.id);
         answers.push({ id:q.id, block:q.block, profile: checked.getAttribute("data-profile") });
-
         if(index===3){ renderBreak("after4", index+1); return; }
         if(index===7){ renderBreak("after8", index+1); return; }
-        if(index < QUESTIONS.length-1) renderQuiz(index+1);
+        if(index<QUESTIONS.length-1) renderQuiz(index+1);
         else renderFinalGate();
       });
 
-      /* Progression affichée + ARIA + live */
-      const pct = PROG[index];
-      fill.style.width = pct + "%";
-      bar.setAttribute("aria-valuenow", pct);
-      const labelSpan = document.getElementById("lpf-label");
-      if(labelSpan) labelSpan.textContent = pct + " %";
+      const pct=PROG[index]; fill.style.width=pct+"%"; bar.setAttribute("aria-valuenow", pct);
+      const labelSpan=document.getElementById("lpf-label"); if(labelSpan) labelSpan.textContent=pct+" %";
 
-      /* Focus management : focus 1ʳᵉ radio sinon la carte */
-      const firstRadio = fieldset.querySelector('input[type=radio]');
-      if(firstRadio){ firstRadio.focus(); }
-      else { card.setAttribute('tabindex','-1'); card.focus(); }
+      const firstRadio=fieldset.querySelector('input[type=radio]');
+      if(firstRadio){ firstRadio.focus(); } else { card.setAttribute('tabindex','-1'); card.focus(); }
     }
 
     function renderBreak(which, nextIndex){
-      root.innerHTML = "";
-      const p = PROG[nextIndex-1];
-      const progWrap = el("div",{class:"lpf-progress"});
-      const bar = el("div",{class:"lpf-progress-bar", role:"progressbar","aria-valuemin":"0","aria-valuemax":"100","aria-valuenow":String(p),"aria-label":"Progression du quiz"});
+      root.innerHTML="";
+      const p=PROG[nextIndex-1];
+      const progWrap=el("div",{class:"lpf-progress"});
+      const bar=el("div",{class:"lpf-progress-bar", role:"progressbar","aria-valuemin":"0","aria-valuemax":"100","aria-valuenow":String(p),"aria-label":"Progression du quiz"});
       bar.appendChild(el("span",{style:"width:"+p+"%"}));
-      const liveLabel = el("div",{class:"lpf-progress-label", "aria-live":"polite"}, p+" %");
+      const liveLabel=el("div",{class:"lpf-progress-label","aria-live":"polite"}, p+" %");
       progWrap.appendChild(bar); progWrap.appendChild(liveLabel);
       root.appendChild(progWrap);
 
-      const data = TEXT.breaks[which];
-      const card = el("div",{class:"lpf-card lpf-break"});
-      const h = el("h3",{}, data.h);
+      const data=TEXT.breaks[which];
+      const card=el("div",{class:"lpf-card lpf-break"});
+      const h=el("h3",{}, data.h);
       card.appendChild(h);
       card.appendChild(el("p",{}, data.t));
       card.appendChild(el("p",{}, data.s));
-      const actions = el("div",{class:"lpf-actions"},[
+      const actions=el("div",{class:"lpf-actions"},[
         el("button",{class:"lpf-btn",type:"button"},"Continuer")
       ]);
       actions.querySelector("button").addEventListener("click", ()=>renderQuiz(nextIndex));
       card.appendChild(actions);
       root.appendChild(card);
-
-      const cta = actions.querySelector("button");
-      cta.focus();
+      actions.querySelector("button").focus();
     }
 
     function renderFinalGate(){
-      root.innerHTML = "";
-      const progWrap = el("div",{class:"lpf-progress"});
-      const bar = el("div",{class:"lpf-progress-bar", role:"progressbar","aria-valuemin":"0","aria-valuemax":"100","aria-valuenow":"100","aria-label":"Progression du quiz"});
+      root.innerHTML="";
+      const progWrap=el("div",{class:"lpf-progress"});
+      const bar=el("div",{class:"lpf-progress-bar", role:"progressbar","aria-valuemin":"0","aria-valuemax":"100","aria-valuenow":"100","aria-label":"Progression du quiz"});
       bar.appendChild(el("span",{style:"width:100%"}));
-      const liveLabel = el("div",{class:"lpf-progress-label", "aria-live":"polite"},"100 %");
+      const liveLabel=el("div",{class:"lpf-progress-label","aria-live":"polite"},"100 %");
       progWrap.appendChild(bar); progWrap.appendChild(liveLabel);
       root.appendChild(progWrap);
 
-      const data = TEXT.breaks.final;
-      const card = el("div",{class:"lpf-card lpf-break"});
-      const h = el("h3",{}, data.h);
+      const data=TEXT.breaks.final;
+      const card=el("div",{class:"lpf-card lpf-break"});
+      const h=el("h3",{}, data.h);
       card.appendChild(h);
       card.appendChild(el("p",{}, data.t));
-      const actions = el("div",{class:"lpf-actions"},[
+      const actions=el("div",{class:"lpf-actions"},[
         el("button",{class:"lpf-btn",type:"button"}, data.cta)
       ]);
       actions.querySelector("button").addEventListener("click", renderResult);
       card.appendChild(actions);
       root.appendChild(card);
-
-      const cta = actions.querySelector("button");
-      cta.focus();
+      actions.querySelector("button").focus();
     }
 
-    /* ===== Scoring ===== */
     function computeScores(){
-      const profiles = ["gardien","organisateur","resolveur","communicant","expert","strategique","collaborateur","curieux"];
+      const profiles=["gardien","organisateur","resolveur","communicant","expert","strategique","collaborateur","curieux"];
       const a={}, b={}, c={}; profiles.forEach(p=>{ a[p]=0; b[p]=0; c[p]=0; });
-
-      answers.forEach(ans=>{
-        if(ans.block==="a") a[ans.profile] = (a[ans.profile]||0)+1;
-        if(ans.block==="b") b[ans.profile] = (b[ans.profile]||0)+1;
-        if(ans.block==="c") c[ans.profile] = (c[ans.profile]||0)+1;
-      });
-
-      const argmax = (obj) => { let best=null, bestV=-Infinity; for(const [k,v] of Object.entries(obj)){ if(v>bestV){best=k; bestV=v;} } return best; };
-      const domA = argmax(a);
-      const domB = argmax(b);
-      const domC = argmax(c);
-
-      const weighted = {};
-      profiles.forEach(p=>{
-        weighted[p] = (WEIGHTS.a*(a[p]||0)) + (WEIGHTS.b*(b[p]||0)) + (WEIGHTS.c*(c[p]||0));
-      });
-      const maxV = Math.max(...profiles.map(p=>weighted[p]));
-      const cands = profiles.filter(p=> weighted[p]===maxV);
-
-      let global = cands[0];
+      answers.forEach(ans=>{ if(ans.block==="a") a[ans.profile]++; if(ans.block==="b") b[ans.profile]++; if(ans.block==="c") c[ans.profile]++; });
+      const argmax=(obj)=>{ let best=null, val=-1; for(const [k,v] of Object.entries(obj)){ if(v>val){best=k; val=v;} } return best; };
+      const domA=argmax(a), domB=argmax(b), domC=argmax(c);
+      const weighted={}; profiles.forEach(p=>{ weighted[p]=WEIGHTS.a*(a[p]||0)+WEIGHTS.b*(b[p]||0)+WEIGHTS.c*(c[p]||0); });
+      const maxV=Math.max(...profiles.map(p=>weighted[p])); const cands=profiles.filter(p=>weighted[p]===maxV);
+      let global=cands[0];
       if(cands.length>1){
-        if(domA && cands.includes(domA)) global = domA;
-        else if(domB && cands.includes(domB)) global = domB;
-        else { for(const pr of TIE){ if(cands.includes(pr)){ global = pr; break; } } }
+        if(domA && cands.includes(domA)) global=domA;
+        else if(domB && cands.includes(domB)) global=domB;
+        else { for(const pr of TIE){ if(cands.includes(pr)){ global=pr; break; } } }
       }
       return { global, domA, domB, domC };
     }
 
-    /* ===== Résultat (injecte title + body) ===== */
     function renderResult(){
-      const s = computeScores();
-      const R = RESULTS[s.global] || RESULTS.organisateur;
+      const s=computeScores();
+      const R=RESULTS[s.global] || RESULTS.organisateur;
 
-      root.innerHTML = "";
-
-      const card = el("div",{class:"lpf-card lpf-result"});
-      const titleEl = el("h2",{}, R.title);
+      root.innerHTML="";
+      const card=el("div",{class:"lpf-card lpf-result"});
+      const titleEl=el("h2",{}, R.title);
       card.appendChild(titleEl);
       card.appendChild(el("div",{class:"body", html: naiveSanitize(R.body)}));
 
-      const actions = el("div",{class:"lpf-actions"},[
+      const actions=el("div",{class:"lpf-actions"},[
         el("button",{class:"lpf-btn",type:"button", onclick:"document.getElementById('email-block').scrollIntoView({behavior:'smooth'})"},"Poursuivre pour recevoir le guide")
       ]);
       card.appendChild(actions);
-
       root.appendChild(card);
 
+      /* dévoiler le bloc e-mail une fois le résultat affiché */
+      const emailBlock=document.getElementById('email-block');
+      if(emailBlock) emailBlock.hidden=false;
+
       titleEl.focus();
-      try { window.dispatchEvent(new CustomEvent('lpf-quiz-finished', {detail:{profile:s.global, domA:s.domA, domB:s.domB, domC:s.domC}})); } catch(e){}
+      try{ window.dispatchEvent(new CustomEvent('lpf-quiz-finished',{detail:{profile:s.global, domA:s.domA, domB:s.domB, domC:s.domC}})); }catch(e){}
     }
 
     /* Init */
@@ -521,13 +496,27 @@
   })();
   </script>
 
-  <div id="email-block">
+  <!-- ===== Bloc Email (caché au départ) ===== -->
+  <div id="email-block" hidden>
     <h2 style="margin-bottom:8px;">Recevez votre guide personnalisé 📘</h2>
-    <p style="margin-top:0;">Entrez votre e-mail pour recevoir votre profil et le guide. L'envoi se fait dans votre boîte de réception <strong>(Vérifiez bien l'adresse !)</strong></p>
+    <p style="margin-top:0;">Entrez votre e-mail pour recevoir votre profil et le guide.
+      <strong>(Vérifiez bien l'adresse !)</strong></p>
+
     <input id="email" type="email" placeholder="Votre e-mail">
     <br>
     <button id="sendEmail" class="lpf-btn" style="margin-top:14px;">Envoyer mon profil</button>
     <div id="feedback" class="feedback" role="status" aria-live="polite"></div>
+
+    <!-- Progression après envoi -->
+    <div id="progress-block" style="max-width:860px;margin:18px auto 0;display:none;">
+      <div style="display:flex;gap:10px;align-items:center;">
+        <div id="progress-bar" style="flex:1;background:#eee;height:12px;border-radius:8px;border:2px solid #000;position:relative;">
+          <span id="progress-fill" style="display:block;background:#2AFF00;height:100%;border-radius:6px;width:0%;transition:width .2s ease;"></span>
+        </div>
+        <div id="progress-label" style="min-width:90px;font-weight:800;text-align:right;">0 %</div>
+      </div>
+      <p id="progress-text" style="margin:8px 0 0;font-weight:700;">Envoi en cours…</p>
+    </div>
   </div>
 
   <script>
@@ -535,7 +524,6 @@
     const sendBtn = document.getElementById("sendEmail");
     const feedbackEl = document.getElementById("feedback");
 
-    // Le quiz émet cet événement à la fin (déjà géré)
     window._lpfProfile = "";
     window.addEventListener("lpf-quiz-finished", (ev) => {
       window._lpfProfile = ev.detail?.profile || "";
@@ -550,6 +538,7 @@
         return;
       }
       sendBtn.disabled = true;
+      emailInput.disabled = true;
       feedbackEl.textContent = "⏳ Envoi en cours…";
       feedbackEl.style.color = "#555";
 
@@ -560,18 +549,44 @@
           body: JSON.stringify({ email, profile })
         });
         const j = await res.json();
+
         if (j.ok) {
-          feedbackEl.textContent = "✅ Merci ! Votre profil a bien été envoyé. Vous recevrez votre guide sous peu.";
-          feedbackEl.style.color = "green";
+          const pb = document.getElementById("progress-block");
+          const pt = document.getElementById("progress-text");
+          if (pb) pb.style.display = "block";
+          if (pt) pt.textContent = "Presque fini…";
+          // animation vers 90%
+          (function animateProgress(target=90, duration=4000){
+            const fill=document.getElementById('progress-fill');
+            const label=document.getElementById('progress-label');
+            if(!fill||!label) return;
+            const start=performance.now(), startVal=0, endVal=target;
+            function tick(now){
+              const t=Math.min(1,(now-start)/duration);
+              const value=Math.round(startVal+(endVal-startVal)*t);
+              fill.style.width=value+"%";
+              label.textContent=value+" %";
+              if(t<1) requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+          })();
+
+          setTimeout(() => {
+            feedbackEl.textContent = "✅ Presque fini ! Vérifiez votre e-mail pour télécharger votre guide.";
+            feedbackEl.style.color = "green";
+          }, 1200);
+
           emailInput.value = "";
         } else {
           feedbackEl.textContent = "❌ Erreur : " + (j.error || "impossible d’envoyer vos données");
           feedbackEl.style.color = "red";
+          emailInput.disabled = false;
+          sendBtn.disabled = false;
         }
       } catch (e) {
         feedbackEl.textContent = "❌ Erreur réseau : réessayez dans un instant.";
         feedbackEl.style.color = "red";
-      } finally {
+        emailInput.disabled = false;
         sendBtn.disabled = false;
       }
     }
