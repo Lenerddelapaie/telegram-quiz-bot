@@ -57,11 +57,41 @@
     #lpf-quiz-root .lpf-result h2 { margin-top:0; }
     #lpf-quiz-root .lpf-result .body { margin-top:8px; }
 
-    /* Bloc e-mail */
-    #email-block[hidden]{ display:none !important; }
-    #email-block { max-width:860px; margin:40px auto; padding:0 16px; text-align:center; }
-    #email { padding:12px 14px; border:2px solid #000; border-radius:10px; width:70%; max-width:420px; font-size:1rem; }
-    .feedback { font-weight:600; margin-top:10px; }
+    /* >>> CTA centrés sur les écrans "Voir mon résultat" et "Poursuivre…" <<< */
+    #lpf-quiz-root .lpf-result .lpf-actions,
+    #lpf-quiz-root .lpf-break .lpf-actions{
+      justify-content:center;
+    }
+
+    /* ===== Modal (email capture) ===== */
+    .lpf-modal-backdrop { position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:999; display:none; }
+    .lpf-modal-backdrop[aria-hidden="false"]{ display:block; }
+
+    .lpf-modal { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; z-index:1000; pointer-events:none; padding:16px; }
+    .lpf-modal[aria-hidden="false"]{ pointer-events:auto; }
+
+    .lpf-dialog {
+      width:min(680px, 92vw);
+      background:#fff; border:6px solid #000; border-radius:20px; box-shadow:0 10px 40px rgba(0,0,0,.25);
+      padding:20px 18px;
+      transform:translateY(10px); transition:transform .16s ease, opacity .16s ease;
+      opacity:0;
+    }
+    .lpf-modal[aria-hidden="false"] .lpf-dialog{ transform:translateY(0); opacity:1; }
+
+    .lpf-dialog header{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:6px; }
+    .lpf-dialog h3{ margin:0; font-size:1.25rem; }
+    .lpf-close { background:#fff; border:2px solid #000; border-radius:10px; padding:6px 10px; cursor:pointer; font-weight:800; }
+    body.lpf-no-scroll{ overflow:hidden; }
+
+    /* ---- Bloc progression du modal : largeur propre ---- */
+    #progress-block{ display:none; max-width:100%; width:100%; margin:18px 0 0; }
+    #progress-block .row{ display:flex; gap:10px; align-items:center; }
+    #progress-bar{ flex:1; background:#eee; height:12px; border-radius:8px; border:2px solid #000; position:relative; width:100%; }
+    #progress-fill{ display:block; background:var(--green); height:100%; border-radius:6px; width:0%; transition:width .2s ease; }
+    #progress-label{ min-width:90px; font-weight:800; text-align:right; }
+    #progress-text{ margin:8px 0 0; font-weight:700; }
+    #lpf-email-modal .feedback{ margin-top:8px; }
 
     @media (prefers-reduced-motion: reduce){ #lpf-quiz-root * { transition:none!important; animation:none!important; } }
     @media (max-width:560px){
@@ -81,8 +111,10 @@
     /* ====== PARAMS ====== */
     const PROG = [20,30,40,50,55,60,70,75,80,85,95,100];
 
-    /* Détection support :has() (fallback classe .no-has) */
-    try{ document.querySelector(':has(*)'); } catch(e){ document.documentElement.classList.add('no-has'); }
+    /* Détection support :has() (fallback .no-has) */
+    if (!CSS.supports('selector(:has(*))')) {
+      document.documentElement.classList.add('no-has');
+    }
 
     /* Contenus d'intro */
     const TEXT = {
@@ -207,42 +239,42 @@
     const WEIGHTS = { a:0.5, b:0.3, c:0.2 };
     const TIE = ["gardien","organisateur","expert","resolveur","communicant","collaborateur","strategique","curieux"];
 
-    /* Résultats */
+    /* Résultats — CTA mis à jour : "Poursuivre pour recevoir le guide" */
     const RESULTS = {
       gardien: { title:"Vous êtes : Gardien de l’Équité", body:`Le gestionnaire de paie est le garant de l’équité au sein de l’entreprise. Son rôle ne se limite pas à établir des bulletins de paie : il veille à ce que chaque salarié reçoive exactement ce qui lui est dû, conformément à la législation sociale en constante évolution. Cela implique la préparation rigoureuse des salaires, la gestion précise des déclarations sociales obligatoires, la prise en compte des absences, primes, heures supplémentaires, ainsi que le respect scrupuleux des échéances.
 <br><br>C’est un métier à haute responsabilité, au croisement du juridique, du technique et de l’organisation, où chaque erreur peut avoir des conséquences financières et humaines majeures.
 <br><br>En tant que Gardien de l’Équité, vous incarnez la rigueur et le sens du juste. Votre intégrité vous positionne comme un pilier fiable dans un environnement où la précision est essentielle pour éviter les inégalités ou litiges. Votre capacité à expliquer clairement les règles complexes aux salariés ajoute une dimension humaine précieuse, rassurante et pédagogique.
 <br><br><strong>⚠️ Cependant</strong>, votre quête absolue de justice peut parfois générer du stress, surtout face à l’incertitude juridique ou aux subtilités changeantes des règles de paie. Un paramétrage oublié ou une interprétation erronée peuvent paradoxalement créer l’injustice que vous souhaitez combattre.
 <br><br>La clé pour vous est d’asseoir votre expertise sur une connaissance solide des fondamentaux associée à une vision globale apaisée et structurée de la paie.
-<br><br><strong>👉 Pour transformer cette rigueur en un véritable atout durable et recevoir votre guide complet, renseignez votre adresse e-mail dans le bloc ci-dessous.</strong>` },
+<br><br><strong>👉 Appuyez sur « Poursuivre pour recevoir le guide » pour saisir votre e-mail et recevoir votre guide complet.</strong>` },
       organisateur: { title:"Vous êtes : Organisateur Méthodique", body:`Le gestionnaire de paie a la lourde responsabilité de piloter l’ensemble des opérations liées au salaire des collaborateurs : élaboration précise des bulletins de paie, suivi rigoureux des déclarations sociales, respect impératif des échéances mensuelles, et gestion sécurisée des données sensibles. Au cœur de ce métier complexe, se conjuguent des compétences techniques pointues, une connaissance fine du cadre juridique, et une organisation sans faille. Chaque élément doit être orchestré avec rigueur, efficacité et adaptabilité pour éviter erreurs et retards coûteux.
 <br><br>En tant qu’Organisateur Méthodique, votre force est votre capacité à structurer, anticiper et maintenir un ordre irréprochable. Vous excellez dans la planification des tâches et le suivi des cycles paie, des points essentiels dans un métier rythmé par des échéances précises et contraignantes. Votre profil révèle également une affinité pour la précision technique, proche du rôle d’expert technique, ce qui vous permet d’être aussi efficace sur la forme que sur le fond.
 <br><br><strong>⚠️ Cependant</strong>, la gestion des imprévus — absences soudaines, variables de dernière minute, évolutions réglementaires fréquentes — peut mettre à l’épreuve votre organisation. Le succès repose alors sur votre capacité à ajuster vos priorités, à rester flexible tout en gardant le cap sur l’essentiel.
-<br><br><strong>👉 Pour transformer cette organisation naturelle en un puissant levier de réussite et recevoir votre guide complet, renseignez votre adresse e-mail dans le bloc ci-dessous.</strong>` },
+<br><br><strong>👉 Appuyez sur « Poursuivre pour recevoir le guide » pour saisir votre e-mail et recevoir votre guide complet.</strong>` },
       resolveur: { title:"Vous êtes : Résolveur de Problèmes", body:`Le gestionnaire de paie jongle chaque mois avec un grand nombre d’informations complexes : calculs précis, variables spécifiques à chaque salarié, évolutions légales fréquentes, déclarations sociales et corrections d’anomalies. Son métier est un subtil équilibre entre technique, réglementation et organisation, où chaque situation exceptionnelle demande une vigilance et une réactivité accrues.
 <br><br>Vous êtes avant tout un Résolveur de Problèmes : vous aimez analyser en profondeur, comprendre les mécanismes et surtout trouver des solutions efficaces. Cette capacité à débloquer les cas particuliers et à corriger les anomalies est précieuse dans un environnement où chaque détail compte et où l’adaptabilité est essentielle. Votre profil révèle également une dimension d’organisateur méthodique, ce qui vous permet de ne pas perdre de vue les échéances cruciales.
 <br><br><strong>⚠️ Toutefois</strong>, en vous concentrant trop longuement sur un problème isolé, vous risquez de perdre le fil global, ce qui pourrait compromettre le respect des délais et fragiliser l’ensemble du cycle paie.
-<br><br><strong>👉 Pour canaliser votre esprit analytique tout en assurant la ponctualité indispensable et recevoir votre guide complet, renseignez votre adresse e-mail dans le bloc ci-dessous.</strong>` },
+<br><br><strong>👉 Appuyez sur « Poursuivre pour recevoir le guide » pour saisir votre e-mail et recevoir votre guide complet.</strong>` },
       communicant: { title:"Vous êtes : Communicant Responsable", body:`Le gestionnaire de paie ne se limite pas à des chiffres dans des tableaux. C’est souvent un interlocuteur privilégié pour les salariés qui souhaitent comprendre leur fiche de paie, poser des questions ou être rassurés. Ce métier demande donc autant de compétences humaines que techniques : vous êtes le lien essentiel entre la complexité réglementaire et les attentes des collaborateurs.
 <br><br>Vous êtes avant tout un Communicant Responsable : vous savez expliquer avec clarté, écouter activement et transmettre les informations de façon rassurante. Votre rôle de médiateur crée un climat de confiance indispensable dans une période sensible où la paie impacte directement le quotidien des salariés. Votre profil dévoile également une bonne organisation, qui vous permet de gérer efficacement votre charge de travail tout en restant disponible.
 <br><br><strong>⚠️ Attention</strong> cependant, votre sens du service et votre disponibilité peuvent être source de dispersion. En voulant répondre à toutes les sollicitations, vous risquez de négliger la rigueur technique indispensable à la sécurité des paies.
-<br><br><strong>👉 Pour trouver l’équilibre parfait entre communication et précision et recevoir votre guide complet, renseignez votre adresse e-mail dans le bloc ci-dessous.</strong>` },
+<br><br><strong>👉 Appuyez sur « Poursuivre pour recevoir le guide » pour saisir votre e-mail et recevoir votre guide complet.</strong>` },
       expert: { title:"Vous êtes : Expert Technique", body:`Le métier de gestionnaire de paie repose sur une maîtrise technique pointue. Il s'agit de gérer des règles juridiques complexes, d'effectuer des calculs précis des cotisations sociales, de paramétrer avec rigueur des logiciels spécialisés, et de garantir la conformité avec les lois et conventions collectives. Dans ce domaine, chaque détail a son importance et peut avoir des conséquences majeures, tant pour l’entreprise que pour les salariés.
 <br><br>Vous êtes avant tout un Expert Technique : vous aimez comprendre en profondeur les règles, vérifier minutieusement les chiffres, et produire des documents impeccables. Votre rigueur et votre souci du détail font de vous un pilier indispensable dans la chaîne de la paie. Votre profil révèle aussi une capacité d’analyse forte, un atout précieux pour détecter et résoudre rapidement les anomalies.
 <br><br><strong>⚠️ Cependant</strong>, votre immersion dans la complexité technique peut parfois vous faire perdre la vision d’ensemble et vous isoler dans les détails, au risque de passer à côté des enjeux plus globaux.
-<br><br><strong>👉 Pour renforcer et structurer vos compétences techniques tout en gardant une perspective stratégique et recevoir votre guide complet, renseignez votre adresse e-mail dans le bloc ci-dessous.</strong>` },
+<br><br><strong>👉 Appuyez sur « Poursuivre pour recevoir le guide » pour saisir votre e-mail et recevoir votre guide complet.</strong>` },
       strategique: { title:"Vous êtes : Stratégique Visionnaire", body:`Le gestionnaire de paie ne se limite plus à un simple rôle technique. Il est aujourd’hui un acteur clé de la performance globale de l’entreprise. Au-delà de la préparation des bulletins de salaire, il optimise les processus, pilote les outils numériques, anticipe les évolutions réglementaires, et contribue aux stratégies de Ressources Humaines. Son expertise nourrit les décisions stratégiques pour garantir la conformité, la satisfaction des collaborateurs et la stabilité financière de l’entreprise.
 <br><br>Vous êtes avant tout un Stratégique Visionnaire : vous aimez prendre du recul, observer les systèmes dans leur globalité, et identifier les leviers d’amélioration. Vous refusez la routine, voyant la paie comme un processus à faire évoluer en continu. Votre capacité à innover s’appuie sur une base solide d’organisation, indispensable pour concrétiser vos ambitions et transformer la stratégie en résultats opérationnels.
 <br><br><strong>⚠️ Pourtant</strong>, si vous négligez les fondamentaux du quotidien — la maîtrise des calculs, le respect des échéances et la conformité — votre vision ambitieuse risque de rester théorique et sans impact concret.
-<br><br><strong>👉 Pour poser les fondations solides de votre avenir stratégique et recevoir votre guide complet, renseignez votre adresse e-mail dans le bloc ci-dessous.</strong>` },
+<br><br><strong>👉 Appuyez sur « Poursuivre pour recevoir le guide » pour saisir votre e-mail et recevoir votre guide complet.</strong>` },
       collaborateur: { title:"Vous êtes : Collaborateur Discret et Fiable", body:`Le métier de gestionnaire de paie repose sur une exigence absolue de confidentialité et de fiabilité. Vous traitez au quotidien des données sensibles : salaires, absences, contrats, informations personnelles précises qui demandent un respect rigoureux des règles de confidentialité. Chaque salarié doit pouvoir vous faire pleinement confiance, car une erreur ou une fuite d’information pourrait entraîner des conséquences lourdes tant humaines que juridiques.
 <br><br>Vous êtes avant tout un Collaborateur Discret et Fiable : sérieux, loyal et constant, vous êtes la personne sur laquelle l’entreprise s’appuie pour assurer des paies justes, conformes et sécurisées. Votre sens aigu de l’équité vient renforcer ce statut, faisant de vous un acteur clé dans la justice salariale au quotidien.
 <br><br><strong>⚠️ Cependant</strong>, votre discrétion et votre modestie peuvent freiner la reconnaissance de vos compétences et limiter vos perspectives d’évolution professionnelle.
-<br><br><strong>👉 Pour valoriser vos atouts, renforcer votre confiance et avancer sereinement dans votre carrière et recevoir votre guide complet, renseignez votre adresse e-mail dans le bloc ci-dessous.</strong>` },
+<br><br><strong>👉 Appuyez sur « Poursuivre pour recevoir le guide » pour saisir votre e-mail et recevoir votre guide complet.</strong>` },
       curieux: { title:"Vous êtes : Curieux Apprenant", body:`Le domaine de la paie est en constante évolution : les lois changent régulièrement, les conventions collectives sont mises à jour, et les logiciels se modernisent sans cesse. Pour réussir dans ce métier dynamique, il faut absolument être capable d’apprendre en continu et d’adapter ses connaissances au fil des nouveautés.
 <br><br>Vous êtes avant tout un Curieux Apprenant : vous aimez découvrir, progresser et explorer de nouveaux savoirs. Cette curiosité est un moteur puissant dans un environnement qui bouge sans cesse. Votre profil révèle aussi une capacité naturelle à communiquer et partager vos apprentissages, une qualité précieuse pour évoluer en équipe.
 <br><br><strong>⚠️ Attention</strong> cependant : sans un plan clair et structuré, vous risquez de vous disperser et de manquer de bases solides, ce qui pourrait ralentir votre progression.
-<br><br><strong>👉 Pour structurer vos apprentissages et progresser efficacement et recevoir votre guide complet, renseignez votre adresse e-mail dans le bloc ci-dessous.</strong>` }
+<br><br><strong>👉 Appuyez sur « Poursuivre pour recevoir le guide » pour saisir votre e-mail et recevoir votre guide complet.</strong>` }
     };
 
     /* Utils */
@@ -264,12 +296,14 @@
       return tmp.innerHTML;
     }
 
-    /* Progress helper: anime 0 -> target% */
-    function animateProgress(target=90, duration=4000){
-      const fill=document.getElementById('progress-fill');
-      const label=document.getElementById('progress-label');
+    /* Progress generic (email modal) */
+    function animateProgress({fillId, labelId, target=90, duration=400}){
+      const fill=document.getElementById(fillId);
+      const label=document.getElementById(labelId);
       if(!fill||!label) return;
-      const start=performance.now(), startVal=0, endVal=Math.max(0,Math.min(100,target));
+      const start=performance.now();
+      const startVal=parseInt((fill.style.width||"0%").replace("%",""))||0;
+      const endVal=Math.max(startVal,Math.min(100,target));
       function tick(now){
         const t=Math.min(1,(now-start)/duration);
         const value=Math.round(startVal+(endVal-startVal)*t);
@@ -369,10 +403,11 @@
       fieldset.appendChild(optsWrap);
       card.appendChild(fieldset);
 
-      /* Actions: Continuer + Revenir (lien dessous) */
+      /* Actions */
       const actions=el("div",{class:"lpf-actions lpf-actions--quiz"});
       const nextBtn=el("button",{class:"lpf-btn",type:"button"},"Continuer");
       const backLink=el("button",{class:"lpf-back-link",type:"button"},"Revenir");
+      backLink.setAttribute("aria-label","Revenir à la question précédente");
       actions.appendChild(nextBtn);
       actions.appendChild(backLink);
       card.appendChild(actions);
@@ -386,7 +421,13 @@
       backLink.addEventListener("click", ()=>{ if(index>0) renderQuiz(index-1); });
 
       nextBtn.addEventListener("click", ()=>{
-        const checked=card.querySelector("input[type=radio]:checked"); if(!checked) return;
+        const checked=card.querySelector("input[type=radio]:checked");
+        if(!checked){
+          nextBtn.setAttribute("aria-live","polite");
+          nextBtn.textContent = "Choisissez une option pour continuer";
+          setTimeout(()=> nextBtn.textContent="Continuer", 1400);
+          return;
+        }
         answers=answers.filter(a=>a.id!==q.id);
         answers.push({ id:q.id, block:q.block, profile: checked.getAttribute("data-profile") });
         if(index===3){ renderBreak("after4", index+1); return; }
@@ -427,6 +468,42 @@
       actions.querySelector("button").focus();
     }
 
+    function computeScores(){
+      const profiles=["gardien","organisateur","resolveur","communicant","expert","strategique","collaborateur","curieux"];
+
+      // Comptages par bloc
+      const blocks = { a:{}, b:{}, c:{} };
+      profiles.forEach(p=>{ blocks.a[p]=0; blocks.b[p]=0; blocks.c[p]=0; });
+      answers.forEach(ans => { blocks[ans.block][ans.profile] += 1; });
+
+      // Normalisation par nb de questions / bloc
+      const questionsPerBlock = { a:4, b:4, c:4 };
+      const share = { a:{}, b:{}, c:{} };
+      ["a","b","c"].forEach(bl => {
+        profiles.forEach(p => { share[bl][p] = (blocks[bl][p] || 0) / questionsPerBlock[bl]; });
+      });
+
+      // Pondération
+      const weighted = {};
+      profiles.forEach(p=>{
+        weighted[p] = WEIGHTS.a*share.a[p] + WEIGHTS.b*share.b[p] + WEIGHTS.c*share.c[p];
+      });
+
+      const argmax = (obj) => { let best=null, val=-1; for (const [k,v] of Object.entries(obj)){ if (v>val){ best=k; val=v; } } return best; };
+      const domA = argmax(share.a), domB = argmax(share.b), domC = argmax(share.c);
+
+      const maxV = Math.max(...profiles.map(p=>weighted[p]));
+      const cands = profiles.filter(p=>weighted[p]===maxV);
+      let global = cands[0];
+      if (cands.length>1){
+        if (domA && cands.includes(domA)) global = domA;
+        else if (domB && cands.includes(domB)) global = domB;
+        else if (domC && cands.includes(domC)) global = domC;
+        else { for (const pr of TIE){ if (cands.includes(pr)){ global=pr; break; } } }
+      }
+      return { global, domA, domB, domC };
+    }
+
     function renderFinalGate(){
       root.innerHTML="";
       const progWrap=el("div",{class:"lpf-progress"});
@@ -442,29 +519,12 @@
       card.appendChild(h);
       card.appendChild(el("p",{}, data.t));
       const actions=el("div",{class:"lpf-actions"},[
-        el("button",{class:"lpf-btn",type:"button"}, data.cta)
+        el("button",{class:"lpf-btn",type:"button", id:"lpf-open-email"}, "Voir mon résultat")
       ]);
       actions.querySelector("button").addEventListener("click", renderResult);
       card.appendChild(actions);
       root.appendChild(card);
       actions.querySelector("button").focus();
-    }
-
-    function computeScores(){
-      const profiles=["gardien","organisateur","resolveur","communicant","expert","strategique","collaborateur","curieux"];
-      const a={}, b={}, c={}; profiles.forEach(p=>{ a[p]=0; b[p]=0; c[p]=0; });
-      answers.forEach(ans=>{ if(ans.block==="a") a[ans.profile]++; if(ans.block==="b") b[ans.profile]++; if(ans.block==="c") c[ans.profile]++; });
-      const argmax=(obj)=>{ let best=null, val=-1; for(const [k,v] of Object.entries(obj)){ if(v>val){best=k; val=v;} } return best; };
-      const domA=argmax(a), domB=argmax(b), domC=argmax(c);
-      const weighted={}; profiles.forEach(p=>{ weighted[p]=WEIGHTS.a*(a[p]||0)+WEIGHTS.b*(b[p]||0)+WEIGHTS.c*(c[p]||0); });
-      const maxV=Math.max(...profiles.map(p=>weighted[p])); const cands=profiles.filter(p=>weighted[p]===maxV);
-      let global=cands[0];
-      if(cands.length>1){
-        if(domA && cands.includes(domA)) global=domA;
-        else if(domB && cands.includes(domB)) global=domB;
-        else { for(const pr of TIE){ if(cands.includes(pr)){ global=pr; break; } } }
-      }
-      return { global, domA, domB, domC };
     }
 
     function renderResult(){
@@ -478,14 +538,13 @@
       card.appendChild(el("div",{class:"body", html: naiveSanitize(R.body)}));
 
       const actions=el("div",{class:"lpf-actions"},[
-        el("button",{class:"lpf-btn",type:"button", onclick:"document.getElementById('email-block').scrollIntoView({behavior:'smooth'})"},"Poursuivre pour recevoir le guide")
+        el("button",{class:"lpf-btn",type:"button", id:"lpf-open-email"},"Poursuivre pour recevoir le guide")
       ]);
       card.appendChild(actions);
       root.appendChild(card);
 
-      /* dévoiler le bloc e-mail une fois le résultat affiché */
-      const emailBlock=document.getElementById('email-block');
-      if(emailBlock) emailBlock.hidden=false;
+      // Ouvrir le modal à clic
+      document.getElementById("lpf-open-email").addEventListener("click", openEmailModal);
 
       titleEl.focus();
       try{ window.dispatchEvent(new CustomEvent('lpf-quiz-finished',{detail:{profile:s.global, domA:s.domA, domB:s.domB, domC:s.domC}})); }catch(e){}
@@ -496,26 +555,33 @@
   })();
   </script>
 
-  <!-- ===== Bloc Email (caché au départ) ===== -->
-  <div id="email-block" hidden>
-    <h2 style="margin-bottom:8px;">Recevez votre guide personnalisé 📘</h2>
-    <p style="margin-top:0;">Entrez votre e-mail pour recevoir votre profil et le guide.
-      <strong>(Vérifiez bien l'adresse !)</strong></p>
+  <!-- ===== Modal Email ===== -->
+  <div id="lpf-email-backdrop" class="lpf-modal-backdrop" aria-hidden="true"></div>
+  <div id="lpf-email-modal" class="lpf-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="lpf-email-title">
+    <div class="lpf-dialog" role="document">
+      <header>
+        <h3 id="lpf-email-title">Recevez votre guide personnalisé 📘</h3>
+        <button type="button" class="lpf-close" id="lpf-close-modal" aria-label="Fermer la fenêtre">Fermer</button>
+      </header>
 
-    <input id="email" type="email" placeholder="Votre e-mail">
-    <br>
-    <button id="sendEmail" class="lpf-btn" style="margin-top:14px;">Envoyer mon profil</button>
-    <div id="feedback" class="feedback" role="status" aria-live="polite"></div>
+      <p>Entrez votre e-mail pour recevoir votre profil et le guide.
+        <strong>(Vérifiez bien l'adresse !)</strong></p>
 
-    <!-- Progression après envoi -->
-    <div id="progress-block" style="max-width:860px;margin:18px auto 0;display:none;">
-      <div style="display:flex;gap:10px;align-items:center;">
-        <div id="progress-bar" style="flex:1;background:#eee;height:12px;border-radius:8px;border:2px solid #000;position:relative;">
-          <span id="progress-fill" style="display:block;background:#2AFF00;height:100%;border-radius:6px;width:0%;transition:width .2s ease;"></span>
+      <input id="email" type="email" placeholder="Votre e-mail" style="padding:12px 14px;border:2px solid #000;border-radius:10px;width:100%;font-size:1rem;">
+      <br>
+      <button id="sendEmail" class="lpf-btn" style="margin-top:14px;">Envoyer mon profil</button>
+      <div id="feedback" class="feedback" role="status" aria-live="polite"></div>
+
+      <!-- Progression après envoi -->
+      <div id="progress-block">
+        <div class="row">
+          <div id="progress-bar">
+            <span id="progress-fill"></span>
+          </div>
+          <div id="progress-label">0 %</div>
         </div>
-        <div id="progress-label" style="min-width:90px;font-weight:800;text-align:right;">0 %</div>
+        <p id="progress-text">Envoi en cours…</p>
       </div>
-      <p id="progress-text" style="margin:8px 0 0;font-weight:700;">Envoi en cours…</p>
     </div>
   </div>
 
@@ -524,6 +590,7 @@
     const sendBtn = document.getElementById("sendEmail");
     const feedbackEl = document.getElementById("feedback");
 
+    // Profil choisi
     window._lpfProfile = "";
     window.addEventListener("lpf-quiz-finished", (ev) => {
       window._lpfProfile = ev.detail?.profile || "";
@@ -532,15 +599,30 @@
     async function sendEmail() {
       const email = (emailInput.value || "").trim();
       const profile = window._lpfProfile || "";
+
+      // Validation simple
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
       if (!email) {
         feedbackEl.textContent = "Veuillez saisir votre adresse e-mail.";
         feedbackEl.style.color = "red";
         return;
       }
+      if (!re.test(email)) {
+        feedbackEl.textContent = "Adresse e-mail invalide. Exemple : prenom.nom@exemple.com";
+        feedbackEl.style.color = "red";
+        return;
+      }
+
       sendBtn.disabled = true;
       emailInput.disabled = true;
       feedbackEl.textContent = "⏳ Envoi en cours…";
       feedbackEl.style.color = "#555";
+
+      // Affiche la barre de progression
+      const pb = document.getElementById("progress-block");
+      const pt = document.getElementById("progress-text");
+      if (pb) pb.style.display = "block";
+      if (pt) pt.textContent = "Envoi en cours…";
 
       try {
         const res = await fetch("/submit-email", {
@@ -548,43 +630,29 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, profile })
         });
-        const j = await res.json();
 
-        if (j.ok) {
-          const pb = document.getElementById("progress-block");
-          const pt = document.getElementById("progress-text");
-          if (pb) pb.style.display = "block";
-          if (pt) pt.textContent = "Presque fini…";
-          // animation vers 90%
-          (function animateProgress(target=90, duration=4000){
-            const fill=document.getElementById('progress-fill');
-            const label=document.getElementById('progress-label');
-            if(!fill||!label) return;
-            const start=performance.now(), startVal=0, endVal=target;
-            function tick(now){
-              const t=Math.min(1,(now-start)/duration);
-              const value=Math.round(startVal+(endVal-startVal)*t);
-              fill.style.width=value+"%";
-              label.textContent=value+" %";
-              if(t<1) requestAnimationFrame(tick);
-            }
-            requestAnimationFrame(tick);
-          })();
+        let j = {};
+        try { j = await res.json(); } catch { j = { ok:false, error:"Réponse serveur invalide." }; }
 
+        if (res.ok && j.ok) {
+          // 0 → 90 %
+          animateProgress({ fillId:"progress-fill", labelId:"progress-label", target:90, duration:800 });
+          if (pt) pt.textContent = "Traitement…";
+
+          // Final → 100 %
           setTimeout(() => {
+            animateProgress({ fillId:"progress-fill", labelId:"progress-label", target:100, duration:500 });
+            if (pt) pt.textContent = "Terminé";
             feedbackEl.textContent = "✅ Presque fini ! Vérifiez votre e-mail pour télécharger votre guide.";
             feedbackEl.style.color = "green";
-          }, 1200);
-
-          emailInput.value = "";
+            emailInput.value = "";
+            setTimeout(() => { closeEmailModal(); }, 1200);
+          }, 900);
         } else {
-          feedbackEl.textContent = "❌ Erreur : " + (j.error || "impossible d’envoyer vos données");
-          feedbackEl.style.color = "red";
-          emailInput.disabled = false;
-          sendBtn.disabled = false;
+          throw new Error(j.error || "Impossible d’envoyer vos données.");
         }
       } catch (e) {
-        feedbackEl.textContent = "❌ Erreur réseau : réessayez dans un instant.";
+        feedbackEl.textContent = "❌ " + (e.message || "Erreur réseau. Réessayez.");
         feedbackEl.style.color = "red";
         emailInput.disabled = false;
         sendBtn.disabled = false;
@@ -593,6 +661,41 @@
 
     sendBtn.addEventListener("click", sendEmail);
     emailInput.addEventListener("keypress", (e) => { if (e.key === "Enter") sendEmail(); });
+
+    // ===== Modal controls =====
+    const modal      = document.getElementById("lpf-email-modal");
+    const backdrop   = document.getElementById("lpf-email-backdrop");
+    const closeBtn   = document.getElementById("lpf-close-modal");
+    let lastFocus    = null;
+
+    function openEmailModal(){
+      lastFocus = document.activeElement;
+      document.body.classList.add("lpf-no-scroll");
+      modal.setAttribute("aria-hidden","false");
+      backdrop.setAttribute("aria-hidden","false");
+      setTimeout(()=>{ const el = document.getElementById("email"); if(el) el.focus(); }, 0);
+      document.addEventListener("keydown", trapTab);
+    }
+    function closeEmailModal(){
+      modal.setAttribute("aria-hidden","true");
+      backdrop.setAttribute("aria-hidden","true");
+      document.body.classList.remove("lpf-no-scroll");
+      document.removeEventListener("keydown", trapTab);
+      if(lastFocus && typeof lastFocus.focus==="function") lastFocus.focus();
+    }
+
+    backdrop.addEventListener("click", closeEmailModal);
+    closeBtn.addEventListener("click", closeEmailModal);
+    document.addEventListener("keydown", (e)=>{ if(e.key==="Escape" && modal.getAttribute("aria-hidden")==="false"){ closeEmailModal(); } });
+
+    function trapTab(e){
+      if(e.key!=="Tab") return;
+      const focusables = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+      if(!focusables.length) return;
+      const first = focusables[0], last = focusables[focusables.length-1];
+      if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
+      else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+    }
   </script>
 </body>
 </html>
